@@ -18,8 +18,13 @@ class Matrix:
         # check if the user_input is a list
         if not is_instance(user_input, list):
             return False
-               
-         # check all lists are the same length
+
+        # check if all rows are lists
+        for i in range(len(user_input)):
+            if not is_instance(user_input, list):
+                return False
+                
+        # check all lists are the same length
         # return the row position that is not a good length
         for i in range(1, len(user_input)):
             if len(user_input[i]) != len(user_input[i-1]):
@@ -57,7 +62,7 @@ class Matrix:
                 for j in range(len(self.width)):
                     result[i].append(self.container[i][j] + other.container[i][j])
 
-            result = Matrix.init(result)
+            result = Matrix(result)
             return result
 
     def __sub__(self, other):
@@ -67,7 +72,7 @@ class Matrix:
                 for j in range(len(self.width)):
                     result[i].append(self.container[i][j] - other.container[i][j])
 
-            result = Matrix.init(result)
+            result = Matrix(result)
             return result 
 
     def __mul__(self, other):
