@@ -2,7 +2,6 @@ class Matrix:
     # empty matrix
     def init():
         self.container = []
-        self.values = []
         self.height = 0
         self.width = 0
 
@@ -33,11 +32,14 @@ class Matrix:
                 if not isinstance(user_input[i][j], int):
                     return False
 
-    def values():
+    def flatten():
         return [element for sublist in self.container for element in sublist]
 
     def print():
-        for 
+        for i in range(len(container)):
+            for j in range(len(conatiner[0])):
+                print(container[i][j] + ' ')
+            print('\n') 
 
     # Arithmetic operations
     def __add__(self, other):
