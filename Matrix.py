@@ -9,12 +9,12 @@ class Matrix:
     # [0] vs [[0]]
     # column vector is [[0],[1],[2]], row vector is [[1,2,3]]
     def init(user_input):
-        if check(user_input):
+        if check_init(user_input):
             self.container = user_input
             self.height = len(user_input)
             self.width = len(user_input[0])
     
-    def check(user_input):
+    def check_init(user_input):
         # check if the user_input is a list
         if not is_instance(user_input, list):
             return False
@@ -36,14 +36,29 @@ class Matrix:
         return [element for sublist in self.container for element in sublist]
 
     def print():
-        for i in range(len(container)):
-            for j in range(len(conatiner[0])):
+        for i in range(self.height):
+            for j in range(len(self.width)):
                 print(container[i][j] + ' ')
             print('\n') 
 
-    # Arithmetic operations
+    def check_before_operations(other):
+        if self.height != other.height:
+            return False
+        elif self.width != other.width:
+            return False
+        return True
+
+    # Arithmetic operations----------------------------------------------------------------------------------------------------
+    # combine add and subtract into one function
     def __add__(self, other):
-        return
+        if check_before_operations(other):
+            result = [[] for i in range(self.height)]
+            for i in range(len(self.height)):
+                for j in range(len(self.width)):
+                    result[i].append(self.container[i][j] + other.container[i][j])
+
+        result = new Matrix.init(result)
+        return result
 
     def __sub__(self, other):
         return 
