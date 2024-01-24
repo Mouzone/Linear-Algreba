@@ -33,7 +33,7 @@ class Matrix:
                     return False
 
     def flatten():
-        return [element for sublist in self.container for element in sublist]
+        return [element for row in self.container for element in row]
 
     def print():
         for i in range(self.height):
@@ -48,7 +48,7 @@ class Matrix:
             return False
         return True
 
-    # Arithmetic operations----------------------------------------------------------------------------------------------------
+    # Arithmetic operations------------------------------------------------------------------------------------------------------
     # combine add and subtract into one function
     def __add__(self, other):
         if check_before_operations(other):
@@ -57,11 +57,18 @@ class Matrix:
                 for j in range(len(self.width)):
                     result[i].append(self.container[i][j] + other.container[i][j])
 
-        result = new Matrix.init(result)
-        return result
+            result = Matrix.init(result)
+            return result
 
     def __sub__(self, other):
-        return 
+        if check_before_operations(other):
+            result = [[] for i in range(self.height)]
+            for i in range(len(self.height)):
+                for j in range(len(self.width)):
+                    result[i].append(self.container[i][j] - other.container[i][j])
+
+            result = Matrix.init(result)
+            return result 
 
     def __mul__(self, other):
         return 
