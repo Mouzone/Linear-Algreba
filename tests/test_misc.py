@@ -1,13 +1,21 @@
 import pytest
-
-# flatten, print
-import re
 from linear_algebra.basic_operations import Matrix, MatrixInitializationError
 
-class TestClass:
-    def test_flatten(self):
-        matrix = Matrix([])
-        assert matrix.flatten == []
+class TestMatrix:
+    def test_flatten_empty_matrix(self):
+        matrix = Matrix([[]])
+        assert matrix.flatten() == []
 
-    def test_print(self):
-        return
+    def test_flatten_non_empty_matrix(self):
+        matrix = Matrix([[1, 2, 3], [4, 5, 6]])
+        assert matrix.flatten() == [1, 2, 3, 4, 5, 6]
+
+    def test_str_empty_matrix(self):
+        matrix = Matrix([[]])
+        expected_output = "\n"
+        assert str(matrix) == expected_output
+
+    def test_str_non_empty_matrix(self):
+        matrix = Matrix([[1, 2, 3], [4, 5, 6]])
+        expected_output = "1 2 3 \n4 5 6 \n"
+        assert str(matrix) == expected_output

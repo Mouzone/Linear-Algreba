@@ -34,25 +34,28 @@ class Matrix:
             for j in range(len(user_input[0])):
                 if not isinstance(user_input[i][j], int):
                     raise MatrixInitializationError(f"Element at position ({i+1}, {j+1}) is not an integer")
-
-    def flatten():
+# Misc utility functions-------------------------------------------------------------------------------------------------------
+    def flatten(self):
         return [element for row in self.container for element in row]
 
-    def print():
+    # somehow make it so when matrice output there are large brackets 
+    def __str__(self):
+        matrix_str = ""
         for i in range(self.height):
             for j in range(self.width):
-                print(self.container[i][j] + ' ')
-            print('\n') 
+                matrix_str += str(self.container[i][j]) + ' '
+            matrix_str += '\n'
+        return matrix_str
    
-    # Arithmetic operations------------------------------------------------------------------------------------------------------
-    # combine add and subtract into one function
+# Arithmetic operations---------------------------------------------------------------------------------------------------------
     def check_before_operations(other):
         if self.height != other.height:
             return False
         elif self.width != other.width:
             return False
         return True
-
+    
+    # combine add and subtract into one function
     def __add__(self, other):
         if check_before_operations(other):
             result = [[] for i in range(self.height)]
