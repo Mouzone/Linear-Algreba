@@ -51,33 +51,27 @@ class Matrix:
         return matrix_str
    
 # Arithmetic operations---------------------------------------------------------------------------------------------------------
-    def check_before_operations(other):
+    def check_before_operations(self, other):
         if self.height != other.height:
-            return False
-        elif self.width != other.width:
-            return False
-        return True
-    
-    # combine add and subtract into one function
+            raise MatrixInitializationError(f"Heights are incompatible")
+        if self.width != other.width:
+            raise MatrixInitializationError(f"Widths are incompatible")   
+             
     def __add__(self, other):
-        if check_before_operations(other):
-            result = [[] for i in range(self.height)]
-            for i in range(self.height):
-                for j in range(self.width):
-                    result[i].append(self.container[i][j] + other.container[i][j])
-
-            result = Matrix(result)
-            return result
+        self.check_before_operations(other)
+        result = [
+            [self.container[i][j] + other.container[i][j] for j in range(self.width)]
+            for i in range(self.height)
+        ]
+        return Matrix(result)
 
     def __sub__(self, other):
-        if check_before_operations(other):
-            result = [[] for i in range(self.height)]
-            for i in range(self.height):
-                for j in range(self.width):
-                    result[i].append(self.container[i][j] - other.container[i][j])
-
-            result = Matrix(result)
-            return result 
+        self.check_before_operations(other)
+        result = [
+            [self.container[i][j] - other.container[i][j] for j in range(self.width)]
+            for i in range(self.height)
+        ]
+        return Matrix(result)
 
     def __mul__(self, other):
         return 
