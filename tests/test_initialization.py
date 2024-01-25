@@ -1,15 +1,15 @@
 import pytest
-from ..Matrix import Matrix
+from Matrix import Matrix
 
 class TestClass:
-    def test_empty_matrix():
+    def test_empty_matrix(self):
     # Test creation of an empty matrix
         matrix = Matrix()
         assert matrix.container == []
         assert matrix.height == 0
         assert matrix.width == 0
     
-    def test_user_input():
+    def test_user_input(self):
         matrix = Matrix([[0]])
         assert matrix.container == [[0]]
         assert matrix.height == 1
