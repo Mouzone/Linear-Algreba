@@ -9,13 +9,12 @@ class Matrix:
     # [0] vs [[0]]
     # column vector is [[0],[1],[2]], row vector is [[1,2,3]]
     def __init__(self, user_input):
-        if check_init(user_input):
+        if self.check_init(user_input):
             self.container = user_input
             self.height = len(user_input)
             self.width = len(user_input[0])
     
-    @staticmethod
-    def check_init(user_input):
+    def check_init(self, user_input):
         # check if the user_input is a list
         if not isinstance(user_input, list):
             return False

@@ -1,5 +1,5 @@
 import pytest
-from Matrix import Matrix
+from linear_algebra.basic_operations import Matrix
 
 class TestClass:
     def test_empty_matrix(self):
