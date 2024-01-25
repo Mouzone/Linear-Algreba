@@ -1,5 +1,5 @@
 import pytest
-from Matrix.py import Matrix
+from ..Matrix import Matrix
 
 class TestClass:
     def test_empty_matrix():
@@ -15,13 +15,13 @@ class TestClass:
         assert matrix.height == 1
         assert matrix.width == 1
     
-    def test_user_input([[0]]):
+    # def test_user_input([[0]]):
 
-    def test_user_input([[1,0], [0,1]]):
+    # def test_user_input([[1,0], [0,1]]):
 
-    def test_user_input([[1,2,3], [4,5,6]]):
+    # def test_user_input([[1,2,3], [4,5,6]]):
 
-    def test_user_input([[1,2,3], [1, 2]]):
+    # def test_user_input([[1,2,3], [1, 2]]):
 
-    def test_user_input([['dog'], ['cat']]):
+    # def test_user_input([['dog'], ['cat']]):
 

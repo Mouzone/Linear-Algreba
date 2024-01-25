@@ -1,6 +1,6 @@
 class Matrix:
     # empty matrix
-    def init():
+    def __init__():
         self.container = []
         self.height = 0
         self.width = 0
@@ -8,20 +8,21 @@ class Matrix:
     # add a function to check the user input
     # [0] vs [[0]]
     # column vector is [[0],[1],[2]], row vector is [[1,2,3]]
-    def init(user_input):
+    def __init__(self, user_input):
         if check_init(user_input):
             self.container = user_input
             self.height = len(user_input)
             self.width = len(user_input[0])
     
+    @staticmethod
     def check_init(user_input):
         # check if the user_input is a list
-        if not is_instance(user_input, list):
+        if not isinstance(user_input, list):
             return False
 
         # check if all rows are lists
         for i in range(len(user_input)):
-            if not is_instance(user_input, list):
+            if not isinstance(user_input, list):
                 return False
                 
         # check all lists are the same length
@@ -42,8 +43,8 @@ class Matrix:
 
     def print():
         for i in range(self.height):
-            for j in range(len(self.width)):
-                print(container[i][j] + ' ')
+            for j in range(self.width):
+                print(self.container[i][j] + ' ')
             print('\n') 
 
     def check_before_operations(other):
@@ -58,8 +59,8 @@ class Matrix:
     def __add__(self, other):
         if check_before_operations(other):
             result = [[] for i in range(self.height)]
-            for i in range(len(self.height)):
-                for j in range(len(self.width)):
+            for i in range(self.height):
+                for j in range(self.width):
                     result[i].append(self.container[i][j] + other.container[i][j])
 
             result = Matrix(result)
@@ -68,8 +69,8 @@ class Matrix:
     def __sub__(self, other):
         if check_before_operations(other):
             result = [[] for i in range(self.height)]
-            for i in range(len(self.height)):
-                for j in range(len(self.width)):
+            for i in range(self.height):
+                for j in range(self.width):
                     result[i].append(self.container[i][j] - other.container[i][j])
 
             result = Matrix(result)
