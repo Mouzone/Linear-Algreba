@@ -1,18 +1,15 @@
 class Matrix:
     # empty matrix
-    def __init__():
-        self.container = []
-        self.height = 0
-        self.width = 0
-
-    # add a function to check the user input
-    # [0] vs [[0]]
-    # column vector is [[0],[1],[2]], row vector is [[1,2,3]]
-    def __init__(self, user_input):
-        if self.check_init(user_input):
-            self.container = user_input
-            self.height = len(user_input)
-            self.width = len(user_input[0])
+    def __init__(self, user_input=None):
+        if user_input is None:
+            self.container = []
+            self.height = 0
+            self.width = 0
+        else:
+            if self.check_init(user_input):
+                self.container = user_input
+                self.height = len(user_input)
+                self.width = len(user_input[0])
     
     def check_init(self, user_input):
         # check if the user_input is a list
