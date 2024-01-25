@@ -34,6 +34,8 @@ class Matrix:
                 if not isinstance(user_input[i][j], int):
                     return False
 
+        return True
+        
     def flatten():
         return [element for row in self.container for element in row]
 
