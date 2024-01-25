@@ -5,7 +5,7 @@ class Matrix:
     # empty matrix
     def __init__(self, user_input=None):
         if user_input is None:
-            self.container = []
+            self.container = [[]]
             self.height = 0
             self.width = 0
         else:
@@ -16,8 +16,8 @@ class Matrix:
     
     def check_init(self, user_input):
         # check if the user_input is a list
-        if not isinstance(user_input, list):
-            raise MatrixInitializationError("Input must be a list")
+        if not isinstance(user_input, list) or len(user_input) == 0:
+            raise MatrixInitializationError("Input must be a non-empty list of lists")
 
         # check if all rows are lists
         for i in range(len(user_input)):
