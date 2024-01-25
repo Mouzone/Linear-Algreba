@@ -14,14 +14,15 @@ class TestClass:
         assert matrix.container == [[0]]
         assert matrix.height == 1
         assert matrix.width == 1
-    
-    # def test_user_input([[0]]):
 
-    # def test_user_input([[1,0], [0,1]]):
+    def test_invalid_input_case1(self):
+        matrix = Matrix([[1, 2, 3], [1, 2]])
+        assert matrix.container == []
+        assert matrix.height == 0
+        assert matrix.width == 0
 
-    # def test_user_input([[1,2,3], [4,5,6]]):
-
-    # def test_user_input([[1,2,3], [1, 2]]):
-
-    # def test_user_input([['dog'], ['cat']]):
-
+    def test_invalid_input_case2(self):
+        matrix = Matrix([['dog'], ['cat']])
+        assert matrix.container == []
+        assert matrix.height == 0
+        assert matrix.width == 0
