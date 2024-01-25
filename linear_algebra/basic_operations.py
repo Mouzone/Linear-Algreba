@@ -43,8 +43,11 @@ class Matrix:
         matrix_str = ""
         for i in range(self.height):
             for j in range(self.width):
-                matrix_str += str(self.container[i][j]) + ' '
-            matrix_str += '\n'
+                matrix_str += str(self.container[i][j])
+                if j < self.width - 1:  # Add space if it's not the last element in the row
+                    matrix_str += ' '
+            if i < self.height - 1:  # Add newline if it's not the last row
+                matrix_str += '\n'
         return matrix_str
    
 # Arithmetic operations---------------------------------------------------------------------------------------------------------

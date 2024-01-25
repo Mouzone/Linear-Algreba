@@ -12,10 +12,10 @@ class TestMatrix:
 
     def test_str_empty_matrix(self):
         matrix = Matrix([[]])
-        expected_output = "\n"
+        expected_output = ""
         assert str(matrix) == expected_output
 
     def test_str_non_empty_matrix(self):
         matrix = Matrix([[1, 2, 3], [4, 5, 6]])
-        expected_output = "1 2 3 \n4 5 6 \n"
+        expected_output = "1 2 3\n4 5 6"
         assert str(matrix) == expected_output
