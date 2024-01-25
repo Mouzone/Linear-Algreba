@@ -34,7 +34,9 @@ class Matrix:
             for j in range(len(user_input[0])):
                 if not isinstance(user_input[i][j], int):
                     raise MatrixInitializationError(f"Element at position ({i+1}, {j+1}) is not an integer")
+
 # Misc utility functions-------------------------------------------------------------------------------------------------------
+    
     def flatten(self):
         return [element for row in self.container for element in row]
 
@@ -51,6 +53,7 @@ class Matrix:
         return matrix_str
    
 # Arithmetic operations---------------------------------------------------------------------------------------------------------
+   
     def check_before_operations(self, other):
         if self.height != other.height:
             raise MatrixInitializationError(f"Heights are incompatible")
@@ -73,5 +76,9 @@ class Matrix:
         ]
         return Matrix(result)
 
+    # write the case when it is a constant on either side
     def __mul__(self, other):
         return 
+
+# advanced operations
+    # transpose and inverse

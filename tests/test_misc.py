@@ -1,5 +1,5 @@
 import pytest
-from linear_algebra.basic_operations import Matrix, MatrixInitializationError
+from linear_algebra.basic import Matrix, MatrixInitializationError
 
 class TestMatrix:
     def test_flatten_empty_matrix(self):

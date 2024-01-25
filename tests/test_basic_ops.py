@@ -1,5 +1,5 @@
 import pytest
-from linear_algebra.basic_operations import Matrix, MatrixInitializationError
+from linear_algebra.basic import Matrix, MatrixInitializationError
 
 class TestMatrixOperations:
     def test_check_before_operations_same_dimensions(self):

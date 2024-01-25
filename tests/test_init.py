@@ -1,6 +1,6 @@
 import pytest
 import re
-from linear_algebra.basic_operations import Matrix, MatrixInitializationError
+from linear_algebra.basic import Matrix, MatrixInitializationError
 
 class TestMatrix:
     def test_empty_matrix_creation(self):
