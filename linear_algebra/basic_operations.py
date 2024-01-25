@@ -1,3 +1,6 @@
+class MatrixInitializationError(Exception):
+    pass
+
 class Matrix:
     # empty matrix
     def __init__(self, user_input=None):
