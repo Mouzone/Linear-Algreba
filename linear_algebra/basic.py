@@ -18,6 +18,11 @@ class Matrix:
         # check if the user_input is a list
         if not isinstance(user_input, list):
             raise MatrixInitializationError("Input must be a list of lists")
+        
+        if not user_input or not isinstance(user_input[0], list):
+            print(f"{user_input} \n")
+            print(user_input[0])
+            raise MatrixInitializationError("Input must be a list of lists")
 
         # check if all rows are lists
         for i in range(len(user_input)):
@@ -89,5 +94,5 @@ class Matrix:
         for i in range(self.height):
             for j in range(self.width):
                 result[j][i] = self.container[i][j]
-        
+        print(result)
         return Matrix(result)

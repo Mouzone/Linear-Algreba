@@ -22,11 +22,11 @@ class TestMatrix:
         assert matrix.width == 3
 
     def test_empty_matrix_creation_failure(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Input must be a non-empty list of lists")):
+        with pytest.raises(MatrixInitializationError, match=re.escape("Input must be a list of lists")):
             matrix = Matrix([])
 
     def test_invalid_input_type_failure(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Input must be a non-empty list of lists")):
+        with pytest.raises(MatrixInitializationError, match=re.escape("Input must be a list of lists")):
             matrix = Matrix("invalid_input")
 
     def test_invalid_input_row_not_list_failure(self):
