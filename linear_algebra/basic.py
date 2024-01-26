@@ -78,7 +78,16 @@ class Matrix:
 
     # write the case when it is a constant on either side
     def __mul__(self, other):
+        # self and other are matrices
         return 
 
-# advanced operations
+# Advanced operations----------------------------------------------------------------------------------------------------------
     # transpose and inverse
+    # for inverse [[5] is [[1/5]]] bc I = [1]
+    def transpose(self):
+        result = [[0 * self.height] * self.width]
+        for i in range(self.height):
+            for j in range(self.width):
+                result[j][i] = self.container[i][j]
+        
+        return Matrix(result)
