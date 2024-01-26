@@ -19,9 +19,7 @@ class Matrix:
         if not isinstance(user_input, list):
             raise MatrixInitializationError("Input must be a list of lists")
         
-        if not user_input or not isinstance(user_input[0], list):
-            print(f"{user_input} \n")
-            print(user_input[0])
+        if len(user_input) == 0 or not isinstance(user_input[0], list):
             raise MatrixInitializationError("Input must be a list of lists")
 
         # check if all rows are lists
@@ -90,6 +88,9 @@ class Matrix:
     # transpose and inverse
     # for inverse [[5] is [[1/5]]] bc I = [1]
     def transpose(self):
+        if self.width == 0:
+            return Matrix([[]])
+            
         result = [[0 for _ in range(self.height)] for _ in range(self.width)]
         for i in range(self.height):
             for j in range(self.width):
