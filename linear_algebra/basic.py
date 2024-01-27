@@ -13,10 +13,10 @@ class Matrix:
             self.container = user_input
             self.height = len(user_input)
             self.width = len(user_input[0])
-        # add initialization for list of vals and dimension m x n
-        # if given list then turn it into a column vector
+    # support the creation of vevtors fast when the input is [1, 2,3]
+    def create_vector(self, user_input):
+        return
         
-    
     def check_init(self, user_input):
         # check if the user_input is a list
         if not isinstance(user_input, list):
@@ -114,7 +114,7 @@ class Matrix:
 
         else:
             raise MatrixInitializationError(f"Types are incompatible")   
-            
+
         return Matrix(result)
 
     def __rmul__(self, other):
@@ -140,3 +140,10 @@ class Matrix:
                 result[j][i] = self.container[i][j]
         print(result)
         return Matrix(result)
+
+    def inverse(self):
+        return 
+    
+    def solve(self, target):
+        # input must
+        return
