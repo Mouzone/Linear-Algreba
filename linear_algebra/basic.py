@@ -13,6 +13,9 @@ class Matrix:
             self.container = user_input
             self.height = len(user_input)
             self.width = len(user_input[0])
+        # add initialization for list of vals and dimension m x n
+        # if given list then turn it into a column vector
+        
     
     def check_init(self, user_input):
         # check if the user_input is a list
@@ -79,10 +82,37 @@ class Matrix:
         ]
         return Matrix(result)
 
+    def check_mul(self, other):
+        if self.width != other.height:
+            raise MatrixInitializationError(f"Dimensions are incompatible")   
+
     # write the case when it is a constant on either side
     def __mul__(self, other):
         # self and other are matrices
-        return 
+        # matrix_1 row i_1 * matrix_2_transposed row i_1 ...
+        if isinstance(self, Matrix) and isinstance(other, Matrix):
+            self.check_mul(other)
+            other_transpose = other.transpose()
+            result = [[0 for _ in range(other_transpose.height)] for _ in range(self.height)]
+            for i in range(self.height):
+                for j in range(other_transpose.height):
+                    multiplied_values = [x * y for x, y in zip(self.container[i], other.container[j])]
+                    val = sum(multiplied_values)
+                    result[i][j] = val
+
+        # int or float then matrix
+        elif isinstance(self, int) or isinstance(self, float):
+            result = []
+            for i in range(other.height):
+                result.append(self * other.container[i])
+
+        # matrix then int or float
+        elif isinstance(other, int) or isinstance(other, float):
+            result = []
+            for i in range(self.height):
+                result.append(other * self.container[i])
+
+        return Matrix(result)
 
 # Advanced operations----------------------------------------------------------------------------------------------------------
     # transpose and inverse
@@ -90,7 +120,7 @@ class Matrix:
     def transpose(self):
         if self.width == 0:
             return Matrix([[]])
-            
+
         result = [[0 for _ in range(self.height)] for _ in range(self.width)]
         for i in range(self.height):
             for j in range(self.width):

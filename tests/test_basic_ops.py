@@ -43,3 +43,34 @@ class TestMatrixOperations:
         matrix2 = Matrix([[5, 6, 7], [8, 9, 10]])
         with pytest.raises(MatrixInitializationError, match="Widths are incompatible"):
             result = matrix1 - matrix2
+
+class TestMatrixMultiplication:
+
+    def test_valid_matrix_multiplication(self):
+        matrix1 = Matrix([[1, 2], [3, 4]])
+        matrix2 = Matrix([[5, 6], [7, 8]])
+        result = matrix1 * matrix2
+        expected_result = Matrix([[19, 22], [43, 50]])
+        assert result.container == expected_result.container
+
+
+    def test_invalid_matrix_multiplication(self):
+        matrix1 = Matrix([[1, 2], [3, 4]])
+        matrix2 = Matrix([[5, 6, 7], [8, 9, 10]])
+        with pytest.raises(ValueError):
+            result = matrix1 * matrix2
+
+    def test_scalar_matrix_multiplication(self):
+        matrix = Matrix([[1, 2], [3, 4]])
+        scalar = 2
+        result = scalar * matrix
+        expected_result = Matrix([[2, 4], [6, 8]])
+        assert result.container == expected_result
+
+    def test_matrix_scalar_multiplication(self):
+        matrix = Matrix([[1, 2], [3, 4]])
+        scalar = 2
+        result = matrix * scalar
+        expected_result = Matrix([[2, 4], [6, 8]])
+        assert result.container == expected_result
+
