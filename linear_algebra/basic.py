@@ -91,28 +91,41 @@ class Matrix:
         # self and other are matrices
         # matrix_1 row i_1 * matrix_2_transposed row i_1 ...
         if isinstance(self, Matrix) and isinstance(other, Matrix):
+
             self.check_mul(other)
             other_transpose = other.transpose()
             result = [[0 for _ in range(other_transpose.height)] for _ in range(self.height)]
+
             for i in range(self.height):
+
                 for j in range(other_transpose.height):
-                    multiplied_values = [x * y for x, y in zip(self.container[i], other.container[j])]
+
+                    multiplied_values = [x * y for x, y in zip(self.container[i], other_transpose.container[j])]
                     val = sum(multiplied_values)
                     result[i][j] = val
 
-        # int or float then matrix
-        elif isinstance(self, int) or isinstance(self, float):
-            result = []
-            for i in range(other.height):
-                result.append(self * other.container[i])
 
         # matrix then int or float
         elif isinstance(other, int) or isinstance(other, float):
             result = []
-            for i in range(self.height):
-                result.append(other * self.container[i])
 
+            for i in range(self.height):
+                result.append([other * val  for val in self.container[i]])
+
+        else:
+            raise MatrixInitializationError(f"Types are incompatible")   
+            
         return Matrix(result)
+
+    def __rmul__(self, other):
+        # int or float then matrix
+        result = []
+        if (isinstance(other, int) or isinstance(other, float)) and isinstance(self, Matrix):
+            for i in range(self.height):
+                result.append([other * val for val in self.container[i]])
+
+            return Matrix(result)
+        raise MatrixInitializationError(f"Types are incompatible")   
 
 # Advanced operations----------------------------------------------------------------------------------------------------------
     # transpose and inverse

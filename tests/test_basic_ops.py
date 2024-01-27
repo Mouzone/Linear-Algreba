@@ -56,8 +56,9 @@ class TestMatrixMultiplication:
 
     def test_invalid_matrix_multiplication(self):
         matrix1 = Matrix([[1, 2], [3, 4]])
-        matrix2 = Matrix([[5, 6, 7], [8, 9, 10]])
-        with pytest.raises(ValueError):
+        matrix2 = Matrix([[5, 6], [8, 9], [7, 10]])
+
+        with pytest.raises(MatrixInitializationError, match="Dimensions are incompatible"):
             result = matrix1 * matrix2
 
     def test_scalar_matrix_multiplication(self):
@@ -65,12 +66,12 @@ class TestMatrixMultiplication:
         scalar = 2
         result = scalar * matrix
         expected_result = Matrix([[2, 4], [6, 8]])
-        assert result.container == expected_result
+        assert result.container == expected_result.container
 
     def test_matrix_scalar_multiplication(self):
         matrix = Matrix([[1, 2], [3, 4]])
         scalar = 2
         result = matrix * scalar
         expected_result = Matrix([[2, 4], [6, 8]])
-        assert result.container == expected_result
+        assert result.container == expected_result.container
 
