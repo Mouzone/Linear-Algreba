@@ -2,6 +2,7 @@ class MatrixInitializationError(Exception):
     pass
 
 class Matrix:
+    
     # rewrite for the case of [[1], [2], [3]] which is a vector 
     def __init__(self, user_input):
         error = self.check_init(user_input)
@@ -17,14 +18,15 @@ class Matrix:
         self.container = user_input
         self.height = len(user_input)
         self.width = len(user_input[0])
-        self.is_vector == False
-
 
     def create_vector(self, user_input):
-        self.container = user_input
+        if len(user_input[0]) != 1:
+            self.container = [[value] for value in user_input]
+        else:
+            self.container = user_input
+
         self.height = len(user_input)
         self.width = 1
-        self.is_vector == True
 
     def check_init(self, user_input):
         # check it is not [] or [[]]
@@ -175,7 +177,7 @@ class Matrix:
         # target must 
         if not isinstance(self, Matrix) or not isinstance(target, Matrix):
             raise ("Inputs must be type Matrices")
-        if not target.is_vector:
+        if target.width != 1:
             raise ("Target must be a vector or a matrix of width 1")
         
         return
