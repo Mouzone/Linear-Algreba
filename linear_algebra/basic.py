@@ -16,11 +16,14 @@ class Matrix:
         self.container = user_input
         self.height = len(user_input)
         self.width = len(user_input[0])
+        self.is_vector == False
+
 
     def create_vector(self, user_input):
         self.container = user_input
         self.height = len(user_input)
         self.width = 1
+        self.is_vector == True
 
     def check_init(self, user_input):
         # check it is not [] or [[]]
@@ -83,6 +86,7 @@ class Matrix:
         result = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
 
         return Matrix(result)
+
 # Arithmetic operations---------------------------------------------------------------------------------------------------------
    
     def check_before_operations(self, other):
@@ -166,10 +170,11 @@ class Matrix:
 
         return Matrix(result)
 
+    def solve(self, target):
+        # target must 
+
+        return
+
     # for inverse [[5] is [[1/5]]] bc I = [1]
     def inverse(self):
         return 
-    
-    def solve(self, target):
-        # target must 
-        return
