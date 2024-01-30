@@ -85,10 +85,13 @@ class Matrix:
     def identity_matrix(n):
         if n < 0:
             raise MatrixInitializationError(f"Invalid Dimension")
-        
         result = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
-
         return Matrix(result)
+
+    # appends for solving and inverting such that those of the same rows become the same rows
+    # returns two paramters, the matrix and the position of the separating line
+    def append(self, other):
+        return
 
 # Arithmetic operations---------------------------------------------------------------------------------------------------------
    
@@ -123,24 +126,19 @@ class Matrix:
         # self and other are matrices
         # matrix_1 row i_1 * matrix_2_transposed row i_1 ...
         if isinstance(self, Matrix) and isinstance(other, Matrix):
-
             self.check_mul(other)
             other_transpose = other.transpose()
+
             result = [[0 for _ in range(other_transpose.height)] for _ in range(self.height)]
-
             for i in range(self.height):
-
                 for j in range(other_transpose.height):
-
                     multiplied_values = [x * y for x, y in zip(self.container[i], other_transpose.container[j])]
                     val = sum(multiplied_values)
                     result[i][j] = val
 
-
         # matrix then int or float
         elif isinstance(other, int) or isinstance(other, float):
             result = []
-
             for i in range(self.height):
                 result.append([other * val  for val in self.container[i]])
 
@@ -155,13 +153,13 @@ class Matrix:
         if (isinstance(other, int) or isinstance(other, float)) and isinstance(self, Matrix):
             for i in range(self.height):
                 result.append([other * val for val in self.container[i]])
-
             return Matrix(result)
         raise MatrixInitializationError(f"Types are incompatible")   
 
 # Advanced operations----------------------------------------------------------------------------------------------------------
    
     # transpose and inverse
+    # add an inplace parameter
     def transpose(self):
         if self.width == 0:
             return Matrix([[]])
@@ -183,5 +181,6 @@ class Matrix:
         return
 
     # for inverse [[5] is [[1/5]]] bc I = [1]
+    # add an inplace parameter
     def inverse(self):
         return 
