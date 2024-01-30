@@ -59,7 +59,6 @@ class Matrix:
                     return f"Element at position ({i}, {j}) is not an integer"
         return None
 
-
 # Misc utility functions-------------------------------------------------------------------------------------------------------
     
     def flatten(self):
@@ -77,6 +76,13 @@ class Matrix:
                 matrix_str += '\n'
         return matrix_str
    
+    def identity_matrix(n):
+        if n < 0:
+            raise MatrixInitializationError(f"Invalid Dimension")
+        
+        result = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
+
+        return Matrix(result)
 # Arithmetic operations---------------------------------------------------------------------------------------------------------
    
     def check_before_operations(self, other):
