@@ -2,6 +2,7 @@ class MatrixInitializationError(Exception):
     pass
 
 class Matrix:
+    # rewrite for the case of [[1], [2], [3]] which is a vector 
     def __init__(self, user_input):
         error = self.check_init(user_input)
         if error is not None:
@@ -172,7 +173,11 @@ class Matrix:
 
     def solve(self, target):
         # target must 
-
+        if not isinstance(self, Matrix) or not isinstance(target, Matrix):
+            raise ("Inputs must be type Matrices")
+        if not target.is_vector:
+            raise ("Target must be a vector or a matrix of width 1")
+        
         return
 
     # for inverse [[5] is [[1/5]]] bc I = [1]
