@@ -2,42 +2,61 @@ class MatrixInitializationError(Exception):
     pass
 
 class Matrix:
-    # empty matrix
-    def __init__(self, user_input=None):
-        if user_input is None:
-            self.container = [[]]
-            self.height = 0
-            self.width = 0
-        else:
-            self.check_init(user_input)
-            self.container = user_input
-            self.height = len(user_input)
-            self.width = len(user_input[0])
-    # support the creation of vevtors fast when the input is [1, 2,3]
+    def __init__(self, user_input):
+        try:
+            input_type = self.check_init(user_input)
+        except MatrixInitializationError as e:
+            print(f"Matrix Initialization Error: {str(e)}")
+            return
+
+        if input_type == "Matrix":
+            self.create_matrix(user_input)
+        elif input_type == "Vector":
+            self.create_vector(user_input)
+
+    def create_matrix(self, user_input):
+        self.container = user_input
+        self.height = len(user_input)
+        self.width = len(user_input[0])
+
     def create_vector(self, user_input):
-        return
-        
+        self.container = user_input
+        self.height = len(user_input)
+        self.width = 1
+
     def check_init(self, user_input):
-        # check if the user_input is a list
-        if not isinstance(user_input, list):
-            raise MatrixInitializationError("Input must be a list of lists")
-        
-        if len(user_input) == 0 or not isinstance(user_input[0], list):
-            raise MatrixInitializationError("Input must be a list of lists")
+        if not (isinstance(user_input, list) and len(user_input) > 0):
+            raise MatrixInitializationError("Matrix must be initialized with a non-empty list")
 
-        # check if all rows are lists
-        for i in range(len(user_input)):
-            if not isinstance(user_input[i], list):
-                raise MatrixInitializationError(f"Row {i+1} is not a list")
+        if isinstance(user_input[0], list):
+            self.check_matrix(user_input)
+            return "Matrix"
+        elif isinstance(user_input[0], int):
+            self.check_vector(user_input)
+            return "Vector"
+        else:
+            raise MatrixInitializationError("Invalid matrix initialization")
 
-        # check all lists are the same length
+    def check_matrix(self, user_input):
+        if not self.check_all_same_lengths(user_input):
+            return False
+        return self.check_all_type_list(user_input)
+
+    def check_all_same_lengths(self, user_input):
         for i in range(1, len(user_input)):
             if len(user_input[i]) != len(user_input[i-1]):
                 raise MatrixInitializationError(f"Row {i+1} has a different length than row {i}")
+        return True
 
-        # check all elements are ints
+    def check_all_type_list(self, user_input):
         for i in range(len(user_input)):
-            for j in range(len(user_input[0])):
+            if not isinstance(user_input[i], list):
+                raise MatrixInitializationError(f"Row {i+1} is not a list")
+        return self.check_all_ints(user_input)
+
+    def check_all_ints(self, user_input):
+        for i in range(len(user_input)):
+            for j in range(len(user_input[i])):
                 if not isinstance(user_input[i][j], int):
                     raise MatrixInitializationError(f"Element at position ({i+1}, {j+1}) is not an integer")
 
@@ -128,8 +147,8 @@ class Matrix:
         raise MatrixInitializationError(f"Types are incompatible")   
 
 # Advanced operations----------------------------------------------------------------------------------------------------------
+   
     # transpose and inverse
-    # for inverse [[5] is [[1/5]]] bc I = [1]
     def transpose(self):
         if self.width == 0:
             return Matrix([[]])
@@ -138,12 +157,13 @@ class Matrix:
         for i in range(self.height):
             for j in range(self.width):
                 result[j][i] = self.container[i][j]
-        print(result)
+
         return Matrix(result)
 
+    # for inverse [[5] is [[1/5]]] bc I = [1]
     def inverse(self):
         return 
     
     def solve(self, target):
-        # input must
+        # target must 
         return
