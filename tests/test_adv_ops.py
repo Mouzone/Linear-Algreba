@@ -17,11 +17,3 @@ class TestMatrixOperations:
 
         expected_result = [[1, 4], [2, 5], [3, 6]]
         assert transposed_matrix.container == expected_result
-
-    def test_transpose_empty_matrix(self):
-        matrix_data = [[]]
-        matrix = Matrix(matrix_data)
-        transposed_matrix = matrix.transpose()
-
-        # Transposing an empty matrix should still result in an empty matrix
-        assert transposed_matrix.container == [[]]

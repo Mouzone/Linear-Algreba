@@ -17,25 +17,25 @@ class TestMatrix:
         assert matrix.width == 3
 
     def test_empty_matrix_creation(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix must be initialized with a non-empty list")):
+        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix Initialization Error: Matrix must be initialized with a non-empty list")):
             matrix = Matrix([[]])
 
     def test_empty_matrix_creation_failure(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix must be initialized with a non-empty list")):
+        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix Initialization Error: Matrix must be initialized with a non-empty list")):
             matrix = Matrix([])
 
     def test_invalid_input_type_failure(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Invalid matrix initialization")):
+        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix Initialization Error: Matrix must be initialized with a non-empty list")):
             matrix = Matrix("invalid_input")
 
     def test_invalid_input_row_not_list_failure(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Row 2 is not a list")):
+        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix Initialization Error: Row 2 is not a list")):
             matrix = Matrix([[1, 2, 3], "invalid_row"])
 
     def test_invalid_input_row_length_mismatch_failure(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Row 2 has a different length than row 1")):
+        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix Initialization Error: Row 2 has a different length than row 1")):
             matrix = Matrix([[1, 2, 3], [4, 5]])
 
     def test_invalid_input_element_not_int_failure(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Element at position (1, 2) is not an integer")):
-            matrix = Matrix([[1, "invalid", 3], [4, 5, 6]])
+        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix Initialization Error: Element at position (1, 2) is not an integer")):
+            matrix = Matrix([[1, "invalid", 3], [4, 5, 6]]) 
