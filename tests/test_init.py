@@ -3,11 +3,6 @@ import re
 from linear_algebra.basic import Matrix, MatrixInitializationError
 
 class TestMatrix:
-    def test_empty_matrix_creation(self):
-        matrix = Matrix()
-        assert matrix.container == [[]]
-        assert matrix.height == 0
-        assert matrix.width == 0
 
     def test_single_element_matrix_creation(self):
         matrix = Matrix([[0]])
@@ -21,12 +16,16 @@ class TestMatrix:
         assert matrix.height == 2
         assert matrix.width == 3
 
+    def test_empty_matrix_creation(self):
+        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix must be initialized with a non-empty list")):
+            matrix = Matrix([[]])
+
     def test_empty_matrix_creation_failure(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Input must be a list of lists")):
+        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix must be initialized with a non-empty list")):
             matrix = Matrix([])
 
     def test_invalid_input_type_failure(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Input must be a list of lists")):
+        with pytest.raises(MatrixInitializationError, match=re.escape("Invalid matrix initialization")):
             matrix = Matrix("invalid_input")
 
     def test_invalid_input_row_not_list_failure(self):

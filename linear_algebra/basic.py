@@ -3,16 +3,12 @@ class MatrixInitializationError(Exception):
 
 class Matrix:
     def __init__(self, user_input):
-        try:
-            input_type = self.check_init(user_input)
-        except MatrixInitializationError as e:
-            print(f"Matrix Initialization Error: {str(e)}")
-            return
-
-        if input_type == "Matrix":
+        # check its either [[1 ...]] or [1....] 
+        self.check_init(self, user_input)
+        if len(user_input[0] > 1):
             self.create_matrix(user_input)
-        elif input_type == "Vector":
-            self.create_vector(user_input)
+        else:
+            self.create_vector
 
     def create_matrix(self, user_input):
         self.container = user_input
@@ -25,34 +21,31 @@ class Matrix:
         self.width = 1
 
     def check_init(self, user_input):
-        if not (isinstance(user_input, list) and len(user_input) > 0):
+        # check it is not [] or [[]]
+        if not (isinstance(user_input, list) and len(user_input) > 0) and len(user_input[0] > 0):
             raise MatrixInitializationError("Matrix must be initialized with a non-empty list")
 
         if isinstance(user_input[0], list):
             self.check_matrix(user_input)
-            return "Matrix"
         elif isinstance(user_input[0], int):
             self.check_vector(user_input)
-            return "Vector"
         else:
             raise MatrixInitializationError("Invalid matrix initialization")
 
     def check_matrix(self, user_input):
-        if not self.check_all_same_lengths(user_input):
-            return False
-        return self.check_all_type_list(user_input)
+        self.check_all_type_list(user_input)
+        self.check_all_same_lengths(user_input)
+        
+    def check_all_type_list(self, user_input):
+        for i in range(len(user_input)):
+            if not isinstance(user_input[i], list):
+                raise MatrixInitializationError(f"Row {i+1} is not a list")
+        self.check_all_ints(user_input)
 
     def check_all_same_lengths(self, user_input):
         for i in range(1, len(user_input)):
             if len(user_input[i]) != len(user_input[i-1]):
                 raise MatrixInitializationError(f"Row {i+1} has a different length than row {i}")
-        return True
-
-    def check_all_type_list(self, user_input):
-        for i in range(len(user_input)):
-            if not isinstance(user_input[i], list):
-                raise MatrixInitializationError(f"Row {i+1} is not a list")
-        return self.check_all_ints(user_input)
 
     def check_all_ints(self, user_input):
         for i in range(len(user_input)):
