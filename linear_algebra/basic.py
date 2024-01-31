@@ -89,7 +89,6 @@ class Matrix:
         raise MatrixInitializationError(f"Invalid Dimension")
 
     # appends for solving and inverting such that those of the same rows become the same rows
-    # returns two paramters, the matrix and the position of the separating line
     def append(self, other):
         if isinstance(self, Matrix) and isinstance(other, Matrix):
             if self.height == other.height:
@@ -182,6 +181,10 @@ class Matrix:
         if target.width != 1:
             raise ("Target must be a vector or a matrix of width 1")
         
+        problem_matrix = solve.append(target)
+        # one function to check for rearrange rows
+        # one function to figure out the multiplier and do the subtraction
+        # one more to check if there is a row of all zeros, either at the end or after each operation
         return
 
     # for inverse [[5] is [[1/5]]] bc I = [1]
