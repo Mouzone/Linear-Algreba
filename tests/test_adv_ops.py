@@ -1,7 +1,7 @@
 import pytest
 from linear_algebra.basic import Matrix, MatrixInitializationError
 
-class TestMatrixOperations:
+class TestTranspose:
     def test_transpose_square_matrix(self):
         matrix_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
         matrix = Matrix(matrix_data)
