@@ -1,7 +1,7 @@
 import pytest
 from linear_algebra.basic import Matrix, MatrixInitializationError
 
-class TestMatrixOperations:
+class TestAdditionSubtraction:
     def test_check_before_operations_same_dimensions(self):
         matrix1 = Matrix([[1, 2], [3, 4]])
         matrix2 = Matrix([[5, 6], [7, 8]])

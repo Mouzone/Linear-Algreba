@@ -83,15 +83,20 @@ class Matrix:
         return matrix_str
    
     def identity_matrix(n):
-        if n < 0:
-            raise MatrixInitializationError(f"Invalid Dimension")
-        result = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
-        return Matrix(result)
+        if n > 0:
+            return Matrix([[1 if i == j else 0 for j in range(n)] for i in range(n)])
+        
+        raise MatrixInitializationError(f"Invalid Dimension")
 
     # appends for solving and inverting such that those of the same rows become the same rows
     # returns two paramters, the matrix and the position of the separating line
     def append(self, other):
-        return
+        if isinstance(self, Matrix) and isinstance(other, Matrix):
+            if self.height == other.height:
+                return Matrix([left + right for left, right in zip(self, other)])
+            raise MatrixInitializationError("Heights are incompatible")
+        raise MatrixInitializationError("Inputs must be Matrices")
+
 
 # Arithmetic operations---------------------------------------------------------------------------------------------------------
    
@@ -172,9 +177,8 @@ class Matrix:
         return Matrix(result)
 
     def solve(self, target):
-        # target must 
         if not isinstance(self, Matrix) or not isinstance(target, Matrix):
-            raise ("Inputs must be type Matrices")
+            raise ("Inputs must be Matrices")
         if target.width != 1:
             raise ("Target must be a vector or a matrix of width 1")
         
