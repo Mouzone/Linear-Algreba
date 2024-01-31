@@ -6,13 +6,13 @@ class Matrix:
     # rewrite for the case of [[1], [2], [3]] which is a vector 
     def __init__(self, user_input):
         error = self.check_init(user_input)
-        if error is not None:
+        if error:
             raise MatrixInitializationError(f"Matrix Initialization Error: {error}")
 
-        if len(user_input[0]) > 1:
-            self.create_matrix(user_input)
-        else:
+        if isinstance(user_input[0], int):
             self.create_vector(user_input)
+        else:
+            self.create_matrix(user_input)
 
     def create_matrix(self, user_input):
         self.container = user_input
@@ -20,23 +20,18 @@ class Matrix:
         self.width = len(user_input[0])
 
     def create_vector(self, user_input):
-        if len(user_input[0]) != 1:
-            self.container = [[value] for value in user_input]
-        else:
-            self.container = user_input
-
+        self.container = [[value] for value in user_input]
         self.height = len(user_input)
         self.width = 1
 
     def check_init(self, user_input):
-        # check it is not [] or [[]]
-        if not isinstance(user_input, list) or not user_input or not user_input[0]:
+        if not isinstance(user_input, list) or not user_input:
             return "Matrix must be initialized with a non-empty list"
 
         if isinstance(user_input[0], list):
             return self.check_matrix(user_input)
         elif isinstance(user_input[0], int):
-            return self.check_vector(user_input)
+            return self.check_all_ints(user_input)
         else:
             return "Invalid matrix initialization"
 
@@ -47,22 +42,27 @@ class Matrix:
         return self.check_all_same_lengths(user_input)
 
     def check_all_type_list(self, user_input):
-        for i, row in enumerate(user_input, 1):
-            if not isinstance(row, list):
-                return f"Row {i} is not a list"
-        return self.check_all_ints(user_input)
+        for row in range(len(user_input)):
+            if not isinstance(user_input[row], list):
+                return f"Row {row + 1} is not a list"
+            all_ints = self.check_all_ints(user_input[row])
+            if all_ints:
+                return all_ints
+        return None
 
     def check_all_same_lengths(self, user_input):
-        for i in range(1, len(user_input)):
-            if len(user_input[i]) != len(user_input[i - 1]):
-                return f"Row {i + 1} has a different length than row {i}"
+        if len(user_input[0]) == 0:
+            return "Matrix must be initialized with a non-empty list"
+
+        for row in range(1, len(user_input)):
+            if len(user_input[row]) != len(user_input[row - 1]):
+                return f"Row {row + 1} has a different length than row {row}"
         return None
 
     def check_all_ints(self, user_input):
-        for i, row in enumerate(user_input, 1):
-            for j, val in enumerate(row, 1):
-                if not isinstance(val, int):
-                    return f"Element at position ({i}, {j}) is not an integer"
+        for col in range(len(user_input)):
+            if not isinstance(user_input[col], int):
+                return f"Must be all integers"
         return None
 
 # Misc utility functions-------------------------------------------------------------------------------------------------------
