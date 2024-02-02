@@ -189,9 +189,7 @@ class Matrix:
     def solve(self, target):
         if not isinstance(self, Matrix) or not isinstance(target, Matrix):
             raise ("Inputs must be Matrices")
-        if target.width != 1:
-            raise ("Target must be a vector or a matrix of width 1")
-        
+
         problem_matrix = solve.append(target)
         separating_line = solve.width
         self.rearrage_rows(problem_matrix, separating_line)
