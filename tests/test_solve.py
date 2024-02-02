@@ -5,8 +5,16 @@ class TestSolve_Requirements:
     def test_one_matrice(self):
         vector = Matrix([1, 2, 3, 4])
 
-        with pytest.raises(MatrixInitializationError, match="Target be Matrix"):
+        with pytest.raises(MatrixInitializationError, match="Target must be Matrix"):
             vector.solve("dog")
+    
+    def test_heights_not_equal(self):
+        matrix_1 = Matrix([[5, 2, 8], [1, 6, 3], [9, 4, 7], [2, 8, 1], [7, 3, 6], [4, 9, 5], [3, 1, 2], [6, 7, 4]]) 
+        matrix_2 = Matrix([[5, 2, 8], [1, 6, 3], [9, 4, 7], [2, 8, 1], [7, 3, 6], [4, 9, 5], [3, 1, 2]])
+
+        with pytest.raises(MatrixInitializationError, match="Dimensions are incompatible"):
+            matrix_1.solve(matrix_2)
+
 
 class TestRearrange:
 

@@ -130,7 +130,7 @@ class Matrix:
         # self and other are matrices
         # matrix_1 row i_1 * matrix_2_transposed row i_1 ...
         if isinstance(self, Matrix) and isinstance(other, Matrix):
-            check_mul(other)
+            self.check_mul(other)
             other_transpose = other.transpose()
 
             result = [[0 for _ in range(other_transpose.height)] for _ in range(self.height)]
@@ -197,9 +197,9 @@ class Matrix:
 
     def solve(self, target):
         if not isinstance(target, Matrix):
-            raise ("Inputs must be Matrices")
-
-        check_mul(self, other)
+            raise MatrixInitializationError("Target must be Matrix")
+        elif self.height != target.height:
+            raise MatrixInitializationError("Dimensions are incompatible")
 
         problem_matrix = self.append(target)
         separating_line = self.width
