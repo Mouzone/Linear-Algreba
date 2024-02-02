@@ -191,7 +191,7 @@ class Matrix:
                             break
             
             result.remove(largest)
-            result.insert(0, largest)
+            result.insert(i, largest)
         
         return Matrix(result)
 
