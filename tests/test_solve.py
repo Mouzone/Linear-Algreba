@@ -5,11 +5,8 @@ class TestSolve_Requirements:
     def test_one_matrice(self):
         vector = Matrix([1, 2, 3, 4])
 
-        with pytest.raises(MatrixInitializationError, match="Inputs must be Matrice"):
-            vector.check_before_operations("dog")
-
-        with pytest.raises(MatrixInitializationError, match="Heights are incompatible"):
-            "dog".check_before_operations(vector)
+        with pytest.raises(MatrixInitializationError, match="Target be Matrix"):
+            vector.solve("dog")
 
 class TestRearrange:
 
