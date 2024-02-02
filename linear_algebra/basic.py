@@ -203,14 +203,15 @@ class Matrix:
 
         problem_matrix = self.append(target)
         separating_line = self.width
+
         rearrage_rows(problem_matrix, separating_line)
-        
         # one function to check for rearrange rows
+        ## add tests for matrices that are appeneded or really just a width that is less than the full width of the matrix
         # one function to figure out the multiplier and do the subtraction
         # one more to check if there is a row of all zeros, either at the end or after each operation
+        # one more function to check if pivots along diagonal to exit early
 
-        # rearrange
-        # reduce row i
+
 
         return
 
