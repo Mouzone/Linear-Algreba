@@ -175,9 +175,12 @@ class Matrix:
 
         return Matrix(result)
 
-    def rearrage_rows(problem_matrix, separating_line):
-        iterations = min(problem_matrix.height, separating_line)
+    def rearrange_rows(input_matrix, separating_line):
+        result = input_matrix.container
+        iterations = min(input_matrix.height, separating_line)
+
         for i in range(iterations):
+            largest = input_matrix.container[i]
             for j in range(i, input_matrix.height):
                 if abs(largest[i]) < abs(input_matrix.container[j][i]):
                     largest = input_matrix.container[j]
@@ -186,10 +189,11 @@ class Matrix:
                         if largest[k] < input_matrix.container[j][k]:
                             largest = input_matrix.container[j]
                             break
-            input_matrix.remove(largest)
-            input_matrix.insert(i, largest)
+            
+            result.remove(largest)
+            result.insert(0, largest)
         
-        return input_matrix
+        return Matrix(result)
 
     def solve(self, target):
         if not isinstance(self, Matrix) or not isinstance(target, Matrix):
