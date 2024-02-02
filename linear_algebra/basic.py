@@ -175,6 +175,17 @@ class Matrix:
 
         return Matrix(result)
 
+    def rearrage_rows(self, problem_matrix, separating_line):
+        iterations = min(problem_matrix.height, separating_line)
+        for i in range(iterations):
+            for j in range(i, input_matrix.height):
+                if abs(largest[i]) < abs(input_matrix.container[j][i]):
+                    largest = input_matrix.container[i]
+            input_matrix.remove(largest)
+            input_matrix.insert(i, largest)
+        
+        return input_matrix
+
     def solve(self, target):
         if not isinstance(self, Matrix) or not isinstance(target, Matrix):
             raise ("Inputs must be Matrices")
@@ -182,9 +193,16 @@ class Matrix:
             raise ("Target must be a vector or a matrix of width 1")
         
         problem_matrix = solve.append(target)
+        separating_line = solve.width
+        self.rearrage_rows(problem_matrix, separating_line)
+        
         # one function to check for rearrange rows
         # one function to figure out the multiplier and do the subtraction
         # one more to check if there is a row of all zeros, either at the end or after each operation
+
+        # rearrange
+        # reduce row i
+
         return
 
     # for inverse [[5] is [[1/5]]] bc I = [1]
