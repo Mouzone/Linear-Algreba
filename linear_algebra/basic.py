@@ -175,7 +175,7 @@ class Matrix:
 
         return Matrix(result)
 
-    def rearrage_rows(self, problem_matrix, separating_line):
+    def rearrage_rows(problem_matrix, separating_line):
         iterations = min(problem_matrix.height, separating_line)
         for i in range(iterations):
             for j in range(i, input_matrix.height):
