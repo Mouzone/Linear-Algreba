@@ -180,7 +180,12 @@ class Matrix:
         for i in range(iterations):
             for j in range(i, input_matrix.height):
                 if abs(largest[i]) < abs(input_matrix.container[j][i]):
-                    largest = input_matrix.container[i]
+                    largest = input_matrix.container[j]
+                elif abs(largest[i]) == abs(input_matrix.container[j][i]):
+                    for k in range(i+1, separating_line):
+                        if largest[k] < input_matrix.container[j][k]:
+                            largest = input_matrix.container[j]
+                            break
             input_matrix.remove(largest)
             input_matrix.insert(i, largest)
         
