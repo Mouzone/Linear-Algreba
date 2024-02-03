@@ -229,17 +229,19 @@ class Matrix:
             raise MatrixInitializationError("Target must be Matrix")
         elif self.height != target.height:
             raise MatrixInitializationError("Dimensions are incompatible")
+        elif self.height != self.width:
+            raise MatrixInitializationError("Matrix must be invertible")
 
-        # self = rearrage_rows(self)
-        # self = reduce(self, row)
-        # if check_finished(problem_matrix):
-        #     break 
-        # one function to check for rearrange rows
-        ## add tests for matrices that are appeneded or really just a width that is less than the full width of the matrix
-        # one function to figure out the multiplier and do the subtraction
-        # one more to check if there is a row of all zeros, either at the end or after each operation
-        # one more function to check if pivots along diagonal to exit early
+        # get pivots all to 1
+        # when using a = lu just iterate over lower triangular and turn them all to 0
+        # after doing this rearrange, but if any rows or columns are 0 then return error
 
+        result = self
+        curr_row = 0
+        while not check_finished(result):
+            result = rearrange_rows(result)
+            result = reduce(result, curr_row)
+            curr_row += 1
 
 
         return
