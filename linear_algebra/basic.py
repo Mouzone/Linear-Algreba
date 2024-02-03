@@ -175,9 +175,10 @@ class Matrix:
 
         return Matrix(result)
 
-    def rearrange_rows(input_matrix, separating_line):
+    # maybe take input so it doesn't look at rows prior ...
+    def rearrange_rows(input_matrix):
         result = input_matrix.container
-        iterations = min(input_matrix.height, separating_line)
+        iterations = min(input_matrix.height, input_matrix.width)
 
         for i in range(iterations):
             largest = input_matrix.container[i]
@@ -185,7 +186,7 @@ class Matrix:
                 if abs(largest[i]) < abs(input_matrix.container[j][i]):
                     largest = input_matrix.container[j]
                 elif abs(largest[i]) == abs(input_matrix.container[j][i]):
-                    for k in range(i+1, separating_line):
+                    for k in range(i+1, input_matrix.width):
                         if largest[k] < input_matrix.container[j][k]:
                             largest = input_matrix.container[j]
                             break
@@ -195,6 +196,7 @@ class Matrix:
         
         return Matrix(result)
 
+    # start is 0 indexed for the row
     def reduce(input_matrix, start):
         result = input_matrix.container
         to_divide = result[start][start]
@@ -206,17 +208,32 @@ class Matrix:
 
         return Matrix(result)
 
-    def solve(self, target):
+    def check_finished(input_matrix):
+        # it is done if everything is 0 and diagonal is 1
+        # it is also done if pivots are 1 and everything else is 0 
+        for i in range(input_matrix.width):
+            for  j in range(i+1):
+                if i == j:
+                    if input_matrix.container[i][j] != 1:
+                        return False
+                else:
+                    if input_matrix.container[i][j] != 0:
+                        return False
+
+        return True
+
+    # use A = LU and reverse substituion 
+    # Ax = b then find ULx = b
+    def alu_solve(self, target):
         if not isinstance(target, Matrix):
             raise MatrixInitializationError("Target must be Matrix")
         elif self.height != target.height:
             raise MatrixInitializationError("Dimensions are incompatible")
 
-        problem_matrix = self.append(target)
-        separating_line = self.width
-
-        rearrage_rows(problem_matrix, separating_line)
-        reduce(problem_matrix, row)
+        # self = rearrage_rows(self)
+        # self = reduce(self, row)
+        # if check_finished(problem_matrix):
+        #     break 
         # one function to check for rearrange rows
         ## add tests for matrices that are appeneded or really just a width that is less than the full width of the matrix
         # one function to figure out the multiplier and do the subtraction
