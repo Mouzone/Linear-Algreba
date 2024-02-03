@@ -197,8 +197,8 @@ class Matrix:
 
     def reduce(input_matrix, start):
         result = input_matrix.container
-        to_divide = input_matrix[start][start]
-        result[start] = [element/to_divide for elment in result[start]]
+        to_divide = result[start][start]
+        result[start] = [element/to_divide for element in result[start]]
 
         for i in range(start + 1, len(result)):
             list_to_subtract = [result[i][start] * element for element in result[start]]
