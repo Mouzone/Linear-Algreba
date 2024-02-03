@@ -76,7 +76,7 @@ class TestReduce:
         
         assert self.are_matrices_equal(matrix.container, correct_matrix.container, tolerance=0.01)
 
-class TestCheck_Finsihed:
+class TestCheck_Finished:
 
     def test_has_upper_elements(self):
         matrix = Matrix([[1, 0.2, 0.3, 0.4], [0, 1, 0.5, 0.6], [0, 0, 1, 0.7], [0, 0, 0, 1]])
