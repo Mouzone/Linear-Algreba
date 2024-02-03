@@ -195,6 +195,17 @@ class Matrix:
         
         return Matrix(result)
 
+    def reduce(input_matrix, start):
+        result = input_matrix.container
+        to_divide = input_matrix[start][start]
+        result[start] = [element/to_divide for elment in result[start]]
+        
+        for i in range(start + 1, len(result)):
+            list_to_subtract = [result[i][start] * element for element in result[start]]
+            result[i] = [element_1 - element_2 for element_1, element_2 in zip(result[i], list_to_subtract)]
+
+        return Matrix(result)
+
     def solve(self, target):
         if not isinstance(target, Matrix):
             raise MatrixInitializationError("Target must be Matrix")
@@ -205,6 +216,7 @@ class Matrix:
         separating_line = self.width
 
         rearrage_rows(problem_matrix, separating_line)
+        reduce(problem_matrix, row)
         # one function to check for rearrange rows
         ## add tests for matrices that are appeneded or really just a width that is less than the full width of the matrix
         # one function to figure out the multiplier and do the subtraction
