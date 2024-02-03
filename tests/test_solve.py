@@ -53,3 +53,13 @@ class TestRearrange:
         correct_matrix = Matrix([[-6,  3, -8,  5, -2], [ 1, -9,  4, -7,  3], [ 4, -2,  7, -1,  9]])
         matrix = Matrix.rearrange_rows(matrix, matrix.width)
         assert matrix.container == correct_matrix.container
+
+class TestReduce:
+
+    def test_reduce(self):
+        matrix = Matrix([[7, 3, 8], [1, 9, 2], [6, 5, 4]])
+        correct_matrix = Matrix([[1, 3/7, 8/7], [0, 9-3/7, 2-8/7], [0, 5-6*3/7, 4-6*8/7]])
+        matrix = Matrix.rearrange_rows(matrix, matrix.width)
+        matrix = reduce(matrix, 0)
+        assert matrix.container == correct_matrix.container
+        

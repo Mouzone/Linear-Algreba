@@ -9,7 +9,7 @@ class Matrix:
         if error:
             raise MatrixInitializationError(f"Matrix Initialization Error: {error}")
 
-        if isinstance(user_input[0], int):
+        if isinstance(user_input[0], int) or isinstance(user_input[0], int):
             self.create_vector(user_input)
         else:
             self.create_matrix(user_input)
@@ -30,7 +30,7 @@ class Matrix:
 
         if isinstance(user_input[0], list):
             return self.check_matrix(user_input)
-        elif isinstance(user_input[0], int):
+        elif isinstance(user_input[0], int) or isinstance(user_input[0], float):
             return self.check_all_ints(user_input)
         else:
             return "Invalid matrix initialization"
@@ -61,7 +61,7 @@ class Matrix:
 
     def check_all_ints(self, user_input):
         for col in range(len(user_input)):
-            if not isinstance(user_input[col], int):
+            if not isinstance(user_input[col], int) and not isinstance(user_input[col], float):
                 return f"Must be all integers"
         return None
 
@@ -199,7 +199,7 @@ class Matrix:
         result = input_matrix.container
         to_divide = input_matrix[start][start]
         result[start] = [element/to_divide for elment in result[start]]
-        
+
         for i in range(start + 1, len(result)):
             list_to_subtract = [result[i][start] * element for element in result[start]]
             result[i] = [element_1 - element_2 for element_1, element_2 in zip(result[i], list_to_subtract)]
