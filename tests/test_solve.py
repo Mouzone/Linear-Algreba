@@ -60,7 +60,7 @@ class TestReduce:
     def are_matrices_equal(matrix1, matrix2, tolerance=1e-9):
         return all(all(abs(val1 - val2) < tolerance for val1, val2 in zip(row1, row2)) for row1, row2 in zip(matrix1, matrix2))
 
-    def test_reduce(self):
+    def test_reduce_row_1(self):
         matrix = Matrix([[7, 3, 8], [1, 9, 2], [6, 5, 4]])
         correct_matrix = Matrix([[1, 3/7, 8/7], [0, 9-3/7, 2-8/7], [0, 5-6*3/7, 4-6*8/7]])
         matrix = Matrix.rearrange_rows(matrix, matrix.width)
@@ -68,4 +68,10 @@ class TestReduce:
         
         assert self.are_matrices_equal(matrix.container, correct_matrix.container, tolerance=0.01)
 
+    def test_reduce_row_1(self):
+        matrix =  Matrix([[1, 0, 0], [0, 5, 4], [0, 10, 47]])
+        correct_matrix = Matrix([[1, 0, 0], [0, 1, 4.7], [0, 0, 4-5*4.7]])
+        matrix = Matrix.rearrange_rows(matrix, matrix.width)
+        matrix = Matrix.reduce(matrix, 1)
         
+        assert self.are_matrices_equal(matrix.container, correct_matrix.container, tolerance=0.01)
