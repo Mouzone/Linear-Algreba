@@ -227,10 +227,12 @@ class Matrix:
         copy = self.rearrange_rows()
         result = Matrix.identity_matrix(copy.width)
 
-        for i in range(copy.width):
+        for i in range(copy.height):
             for  j in range(i):
-                result.container[i][j] = copy.container[i][j]
-                copy.container[i] = [copy.container[i][pos] - result.container[i][j]* copy.container[i-1][pos] for pos in range(copy.width)]
+                if copy.container[i][j] != 0:
+                    multiplier = -copy.container[j][j]/copy.container[i][j]
+                    result.container[i][j] = copy.container[j][j]/copy.container[i][j]
+                    copy.container[i] = [copy.container[i][pos] + multiplier * copy.container[j][pos] for pos in range(copy.width)]
                 # if not Matrix.check_finished(copy):
                 #     break
 

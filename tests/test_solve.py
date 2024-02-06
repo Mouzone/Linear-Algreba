@@ -102,7 +102,9 @@ class TestFactorization:
     def test_example_1(self):
         matrix = Matrix([[1, 2, 3], [2, 3, 1], [-2, 3, -2]])
         L, U = matrix.alu_factorization()
-        L_correct = Matrix([[1, 0, 0], [2, 1, 0], [-2, -7, -1]])
+        L_correct = Matrix([[1, 0, 0], [2, 1, 0], [-2, -7, 1]])
         U_correct = Matrix([[1, 2, 3], [0, -1, -5], [0, 0, -31]])
+        print(L)
+        print(U)
         assert L.container == L_correct.container
         assert U.container == U_correct.container
