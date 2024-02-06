@@ -89,3 +89,20 @@ class TestCheck_Finished:
     def lower_has_elements(self):
         matrix = Matrix([[1, 0.2, 0.3, 0.4], [1, 1, 0.5, 0.6], [0, 0, 1, 0.7], [3, 4, 0, 1]])
         assert Matrix.check_finished(matrix) == False
+
+class TestFactorization:
+
+    def test_identity_matrix(self):
+        matrix = Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+        L, U = matrix.alu_factorization()
+        correct = Matrix.identity_matrix(3)
+        assert L.container == correct.container
+        assert U.container == correct.container
+    
+    def test_example_1(self):
+        matrix = Matrix([[1, 2, 3], [2, 3, 1], [-2, 3, -2]])
+        L, U = matrix.alu_factorization()
+        L_correct = Matrix([[1, 0, 0], [2, 1, 0], [-2, -7, -1]])
+        U_correct = Matrix([[1, 2, 3], [0, -1, -5], [0, 0, -31]])
+        assert L.container == L_correct.container
+        assert U.container == U_correct.container

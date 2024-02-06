@@ -222,8 +222,22 @@ class Matrix:
 
         return True
 
-    # use A = LU and reverse substituion 
-    # Ax = b then find ULx = b
+    # input must be an invertible matrix, until invertibility check is found
+    def alu_factorization(self):
+        copy = self.rearrange_rows()
+        result = Matrix.identity_matrix(copy.width)
+
+        for i in range(copy.width):
+            for  j in range(i):
+                result.container[i][j] = copy.container[i][j]
+                copy.container[i] = [copy.container[i][pos] - result.container[i][j]* copy.container[i-1][pos] for pos in range(copy.width)]
+                # if not Matrix.check_finished(copy):
+                #     break
+
+        return result, copy #result is L, copy is U
+                
+        
+    # input must be an invertible matrix, until invertibility check is found
     def alu_solve(self, target):
         if not isinstance(target, Matrix):
             raise MatrixInitializationError("Target must be Matrix")
@@ -232,21 +246,11 @@ class Matrix:
         elif self.height != self.width:
             raise MatrixInitializationError("Matrix must be invertible")
 
-        # get pivots all to 1
-        # when using a = lu just iterate over lower triangular and turn them all to 0
-        # after doing this rearrange, but if any rows or columns are 0 then return error
-
-        result = self
+        result = self.container.copy()
         curr_row = 0
         while not check_finished(result):
             result = rearrange_rows(result)
             result = reduce(result, curr_row)
             curr_row += 1
 
-
-        return
-
-    # for inverse [[5] is [[1/5]]] bc I = [1]
-    # add an inplace parameter
-    def inverse(self):
-        return 
+        return result
