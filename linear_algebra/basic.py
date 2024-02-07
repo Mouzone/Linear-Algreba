@@ -1,6 +1,9 @@
 class MatrixInitializationError(Exception):
     pass
 
+## Fixup the input  and figure out if making a copy is neccesary
+## Reorganizing into separate files
+## Fix it up if the initaliation has floats
 class Matrix:
     
     # rewrite for the case of [[1], [2], [3]] which is a vector 
@@ -9,7 +12,7 @@ class Matrix:
         if error:
             raise MatrixInitializationError(f"Matrix Initialization Error: {error}")
 
-        if isinstance(user_input[0], int) or isinstance(user_input[0], int):
+        if isinstance(user_input[0], int) or isinstance(user_input[0], float):
             self.create_vector(user_input)
         else:
             self.create_matrix(user_input)
@@ -238,14 +241,6 @@ class Matrix:
 
         return result, copy #result is L, copy is U
                 
-    def lower_inverse(self):
-        result = self.copy()
-        for x in range(result.height):
-            for y in range(x):
-                if x != y:
-                    result.container[x][y] = -result.container[x][y]
-        
-        return Matrix(result)
 
     # input must be an invertible matrix, until invertibility check is found
     def alu_solve(self, target):
@@ -257,13 +252,15 @@ class Matrix:
             raise MatrixInitializationError("Matrix must be invertible")
 
         L, U = self.alu_factorization()
-        L_inverse = L.lower_inverse()
-        first_product = L_inverse * target
 
-        answer = [0 for _ in range(first_product.width)]
-
+        # user forward substitution from top to bottom to find 'c'
+        c = [0 for _ in range(L.width)]
+        for i in range(L.height):
+            c[i] = target.container[i][0] - sum([c[j] * L.container[i][j] for j in range(L.width)])
+        
         # solving by backwards plugging
-        for i in range(first_product.height - 1, -1, -1):
-            for j in range(first_product.width-1, i-1, -1):
-                answer[i] = target[i] - sum([answer[i] * first_product.container[i] for i in range(first_product.width)])
-        return result
+        answer = [0 for _ in range(U.height)]
+        for i in range(U.height - 1, -1, -1):
+            answer[i] = c[i] - sum([answer[j] * U.container[i][j] for j in range(U.width)])
+        
+        return Matrix(answer)

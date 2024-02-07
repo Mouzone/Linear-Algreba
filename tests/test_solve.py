@@ -108,3 +108,12 @@ class TestFactorization:
         print(U)
         assert L.container == L_correct.container
         assert U.container == U_correct.container
+
+class TestALU_Solve:
+
+    def test_example_1(self):
+        A = Matrix([[1, 2], [4, 9]])
+        b = Matrix([5, 21])
+        x = A.alu_solve(b)
+        answer = Matrix([3, 1])
+        assert x.container == answer.container
