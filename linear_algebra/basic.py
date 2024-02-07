@@ -224,21 +224,29 @@ class Matrix:
 
     # input must be an invertible matrix, until invertibility check is found
     def alu_factorization(self):
-        copy = self.rearrange_rows()
+        copy = Matrix(self.container.copy())
         result = Matrix.identity_matrix(copy.width)
 
         for i in range(copy.height):
             for  j in range(i):
-                if copy.container[i][j] != 0:
-                    multiplier = -copy.container[j][j]/copy.container[i][j]
-                    result.container[i][j] = copy.container[j][j]/copy.container[i][j]
+                if copy.container[j][j] != 0 and copy.container[i][j] != 0:
+                    multiplier = -copy.container[i][j]/copy.container[j][j]
+                    result.container[i][j] = copy.container[i][j]/copy.container[j][j]
                     copy.container[i] = [copy.container[i][pos] + multiplier * copy.container[j][pos] for pos in range(copy.width)]
                 # if not Matrix.check_finished(copy):
                 #     break
 
         return result, copy #result is L, copy is U
                 
+    def lower_inverse(self):
+        result = self.copy()
+        for x in range(result.height):
+            for y in range(x):
+                if x != y:
+                    result.container[x][y] = -result.container[x][y]
         
+        return Matrix(result)
+
     # input must be an invertible matrix, until invertibility check is found
     def alu_solve(self, target):
         if not isinstance(target, Matrix):
@@ -248,11 +256,14 @@ class Matrix:
         elif self.height != self.width:
             raise MatrixInitializationError("Matrix must be invertible")
 
-        result = self.container.copy()
-        curr_row = 0
-        while not check_finished(result):
-            result = rearrange_rows(result)
-            result = reduce(result, curr_row)
-            curr_row += 1
+        L, U = self.alu_factorization()
+        L_inverse = L.lower_inverse()
+        first_product = L_inverse * target
 
+        answer = [0 for _ in range(first_product.width)]
+
+        # solving by backwards plugging
+        for i in range(first_product.height - 1, -1, -1):
+            for j in range(first_product.width-1, i-1, -1):
+                answer[i] = target[i] - sum([answer[i] * first_product.container[i] for i in range(first_product.width)])
         return result
