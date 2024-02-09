@@ -206,9 +206,10 @@ class Matrix:
         to_divide = result[start][start]
         result[start] = [element/to_divide for element in result[start]]
 
-        for i in range(start + 1, len(result)):
-            list_to_subtract = [result[i][start] * element for element in result[start]]
-            result[i] = [element_1 - element_2 for element_1, element_2 in zip(result[i], list_to_subtract)]
+        for i in range(len(result)):
+            if i != start:
+                list_to_subtract = [result[i][start] * element for element in result[start]]
+                result[i] = [element_1 - element_2 for element_1, element_2 in zip(result[i], list_to_subtract)]
 
         return Matrix(result)
 
@@ -229,21 +230,23 @@ class Matrix:
         return True
 
     def append(self, target):
-        return Matrix([self[i] + target[i] for i in zip(self, target)]), self.width
+        return Matrix([self.container[i] + target.container[i] for i in range(self.height)]), self.width
 
     def gaussian_elimination(self, target):
-        augmented_matrix, border = append(self, target)
+        # add logic to check conmpatibility
+        augmented_matrix, border = Matrix.append(self, target)
         # rearrange
         # iterate by column
         for i in range(augmented_matrix.height):
-            augmented_matrix = Matrix.rearrange_rows(augmented_matrix, start)
+            augmented_matrix = Matrix.rearrange_rows(augmented_matrix, i)
             augmented_matrix = Matrix.reduce(augmented_matrix, i)
-            if check_finished(augmented_matrix, border):
-                return Matrix([row[border: ] for row in augmented_matrix])
+
+            if Matrix.check_finished(augmented_matrix, border):
+                return Matrix([row[border: ] for row in augmented_matrix.container])
                 break
 
-        if check_finished(augmented_matrix, border):
-            return Matrix([row[border: ] for row in augmented_matrix])
+        if Matrix.check_finished(augmented_matrix, border):
+            return Matrix([row[border: ] for row in augmented_matrix.container])
         return "error"
         
     # input must be an invertible matrix, until invertibility check is found
