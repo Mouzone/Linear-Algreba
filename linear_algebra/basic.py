@@ -3,7 +3,7 @@ class MatrixInitializationError(Exception):
 
 ## Fixup the input  and figure out if making a copy is neccesary
 ## Reorganizing into separate files
-## Fix it up if the initaliation has floats
+## clean up flow and non necceary functions
 class Matrix:
     
     # rewrite for the case of [[1], [2], [3]] which is a vector 
@@ -17,6 +17,7 @@ class Matrix:
         else:
             self.create_matrix(user_input)
 
+    ## make a general function fro creating, and call it with a keyword and input the values
     def create_matrix(self, user_input):
         self.container = user_input
         self.height = len(user_input)
@@ -178,12 +179,12 @@ class Matrix:
 
         return Matrix(result)
 
-    # maybe take input so it doesn't look at rows prior ...
-    def rearrange_rows(input_matrix):
+    # useless for now until implement gaussian elimination
+    def rearrange_rows(input_matrix, start):
         result = input_matrix.container
         iterations = min(input_matrix.height, input_matrix.width)
 
-        for i in range(iterations):
+        for i in range(start, iterations):
             largest = input_matrix.container[i]
             for j in range(i, input_matrix.height):
                 if abs(largest[i]) < abs(input_matrix.container[j][i]):
@@ -199,7 +200,7 @@ class Matrix:
         
         return Matrix(result)
 
-    # start is 0 indexed for the row
+    # useless for now until implement gaussian elimination
     def reduce(input_matrix, start):
         result = input_matrix.container
         to_divide = result[start][start]
@@ -211,10 +212,12 @@ class Matrix:
 
         return Matrix(result)
 
-    def check_finished(input_matrix):
+    # useless for now until implement gaussian elimination
+    # or figure out how to check for inverses in alu solve
+    def check_finished(input_matrix, border):
         # it is done if everything is 0 and diagonal is 1
         # it is also done if pivots are 1 and everything else is 0 
-        for i in range(input_matrix.width):
+        for i in range(border):
             for  j in range(i+1):
                 if i == j:
                     if input_matrix.container[i][j] != 1:
@@ -225,6 +228,24 @@ class Matrix:
 
         return True
 
+    def append(self, target):
+        return Matrix([self[i] + target[i] for i in zip(self, target)]), self.width
+
+    def gaussian_elimination(self, target):
+        augmented_matrix, border = append(self, target)
+        # rearrange
+        # iterate by column
+        for i in range(augmented_matrix.height):
+            augmented_matrix = Matrix.rearrange_rows(augmented_matrix, start)
+            augmented_matrix = Matrix.reduce(augmented_matrix, i)
+            if check_finished(augmented_matrix, border):
+                return Matrix([row[border: ] for row in augmented_matrix])
+                break
+
+        if check_finished(augmented_matrix, border):
+            return Matrix([row[border: ] for row in augmented_matrix])
+        return "error"
+        
     # input must be an invertible matrix, until invertibility check is found
     def alu_factorization(self):
         copy = Matrix(self.container.copy())
@@ -243,6 +264,7 @@ class Matrix:
                 
 
     # input must be an invertible matrix, until invertibility check is found
+    ## can check for inveritbiltiy here, bc if encounter any 0 rows then it is not invertible in the U
     def alu_solve(self, target):
         if not isinstance(target, Matrix):
             raise MatrixInitializationError("Target must be Matrix")
@@ -255,12 +277,17 @@ class Matrix:
 
         # user forward substitution from top to bottom to find 'c'
         c = [0 for _ in range(L.width)]
-        for i in range(L.height):
-            c[i] = target.container[i][0] - sum([c[j] * L.container[i][j] for j in range(L.width)])
+        for row in range(L.height):
+            c[row] = target.container[row][0] - sum([c[col] * L.container[row][col] for col in range(L.width)])
         
         # solving by backwards plugging
         answer = [0 for _ in range(U.height)]
-        for i in range(U.height - 1, -1, -1):
-            answer[i] = c[i] - sum([answer[j] * U.container[i][j] for j in range(U.width)])
+        for row in range(U.height - 1, -1, -1):
+            answer[row] = c[row] - sum([answer[col] * U.container[row][col] for col in range(U.width)])
         
         return Matrix(answer)
+
+# Arithmetic operations---------------------------------------------------------------------------------------------------------
+# nullspace including special vectors
+# rank, cokumn space, lienar independence
+# vector space for col space and null space
