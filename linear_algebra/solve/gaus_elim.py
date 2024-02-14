@@ -49,6 +49,9 @@ def check_finished(input_matrix, border):
 def append(self, target):
     return Matrix([self.container[i] + target.container[i] for i in range(self.height)]), self.width
 
+# return whatever the  thing at the end is even if it is not identity matrix
+# also be able to return the vectors like null space would return the free varaible vectors
+
 def gaussian_elimination(self, target, rref=False):
     # add logic to check conmpatibility
     augmented_matrix, border = Matrix.append(self, target)

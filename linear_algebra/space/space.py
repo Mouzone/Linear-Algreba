@@ -10,3 +10,4 @@ def null_space(self):
     
     # check each column if its a pivot column
     
+# take a list of inputs what they want, if no iunputs we find all the spaces and return them

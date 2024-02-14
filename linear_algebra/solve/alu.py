@@ -1,3 +1,7 @@
+# rewrite such that these are not class functions but general functions that take input
+# not .functions anymore
+# returns error if it doesn't factor all the way with the check
+
 # input must be an invertible matrix, until invertibility check is found
 def alu_factorization(self):
     copy = Matrix(self.container.copy())
