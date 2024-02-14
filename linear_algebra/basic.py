@@ -4,6 +4,7 @@ class MatrixInitializationError(Exception):
 ## Fixup the input  and figure out if making a copy is neccesary
 ## Reorganizing into separate files
 ## clean up flow and non necceary functions
+## write more test cases for gaussian elimination functions
 class Matrix:
     
     # rewrite for the case of [[1], [2], [3]] which is a vector 
@@ -22,11 +23,13 @@ class Matrix:
         self.container = user_input
         self.height = len(user_input)
         self.width = len(user_input[0])
+        self.rref = None
 
     def create_vector(self, user_input):
         self.container = [[value] for value in user_input]
         self.height = len(user_input)
         self.width = 1
+        self.rref = None
 
     def check_init(self, user_input):
         if not isinstance(user_input, list) or not user_input:
@@ -232,7 +235,7 @@ class Matrix:
     def append(self, target):
         return Matrix([self.container[i] + target.container[i] for i in range(self.height)]), self.width
 
-    def gaussian_elimination(self, target):
+    def gaussian_elimination(self, target, rref=False):
         # add logic to check conmpatibility
         augmented_matrix, border = Matrix.append(self, target)
         # rearrange
@@ -245,9 +248,15 @@ class Matrix:
                 return Matrix([row[border: ] for row in augmented_matrix.container])
                 break
 
+        return_items = []
+        # save rref as something unique to each
+        # same for nullspace, column space, rowspace as something unique to each matrix made
+        # raise MatrixInitializationError(f"Types are incompatible")   
+        if rref:
+            return_items.append(augmented_matrix)
         if Matrix.check_finished(augmented_matrix, border):
-            return Matrix([row[border: ] for row in augmented_matrix.container])
-        return "error"
+            return_items.append(Matrix([row[border: ] for row in augmented_matrix.container]))
+        return return_items
         
     # input must be an invertible matrix, until invertibility check is found
     def alu_factorization(self):
@@ -294,3 +303,12 @@ class Matrix:
 # nullspace including special vectors
 # rank, cokumn space, lienar independence
 # vector space for col space and null space
+    def null_space(self):
+        zero_vector = Matrix([[0] for i in self.height])
+        original = Matrix(self.container.copy())
+        columns = original.transpose()
+        # reduces it to 
+        rref = alu_solve(self, zero_vector)
+        
+        # check each column if its a pivot column
+        
