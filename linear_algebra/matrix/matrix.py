@@ -99,7 +99,6 @@ class Matrix:
         return Matrix(result)
 
     def __rmul__(self, other):
-        # int or float then matrix
         result = []
         if (isinstance(other, int) or isinstance(other, float)) and isinstance(self, Matrix):
             for i in range(self.height):
@@ -107,8 +106,6 @@ class Matrix:
             return Matrix(result)
         raise MatrixInitializationError(f"Types are incompatible")   
 
-        # transpose and inverse
-    # add an inplace parameter
     def transpose(self):
         if self.width == 0:
             return Matrix([[]])
