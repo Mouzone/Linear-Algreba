@@ -1,5 +1,6 @@
 import pytest
-from linear_algebra.basic import Matrix, MatrixInitializationError
+from linear_algebra.matrix.matrix import Matrix, MatrixInitializationError
+from linear_algebra.matrix import utility
 
 class TestFlatten_Print:
     # flatten
@@ -17,12 +18,12 @@ class TestIdentityMatrix:
     def test_identity_matrix_1x1(self):
         # dimension 1
         matrix = Matrix([[1]])
-        assert Matrix.identity_matrix(1).container == matrix.container
+        assert utility.identity_matrix(1).container == matrix.container
 
     def test_identity_matrix_3x3(self):
         # dimension 3
         matrix = Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
-        assert Matrix.identity_matrix(3).container == matrix.container
+        assert utility.identity_matrix(3).container == matrix.container
 
 class AppendMatrix:
     def test_sample_matrices():

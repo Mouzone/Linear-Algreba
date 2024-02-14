@@ -1,5 +1,4 @@
-def flatten(self):
-    return [element for row in self.container for element in row]
+from linear_algebra.matrix.matrix import Matrix
 
 def identity_matrix(n):
     if n > 0:

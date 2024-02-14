@@ -23,6 +23,9 @@ class Matrix:
     def __str__(self):
         return '\n'.join(' '.join(map(str, row)) for row in self.container)
 
+    def flatten(self):
+        return [element for row in self.container for element in row]
+
     def validate_input(self, user_input):
         if not isinstance(user_input, list) or not user_input:
             return "Matrix must be initialized with a non-empty list"
