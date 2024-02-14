@@ -2,19 +2,12 @@ class MatrixInitializationError(Exception):
     pass
 
 class Matrix:
-    
-    # rewrite for the case of [[1], [2], [3]] which is a vector 
     def __init__(self, user_input):
-        error = self.check_init(user_input)
+        error = self.validate_input(user_input)
         if error:
             raise MatrixInitializationError(f"Matrix Initialization Error: {error}")
+        self.create_matrix(user_input) if isinstance(user_input[0], list) else self.create_vector(user_input)
 
-        if isinstance(user_input[0], int) or isinstance(user_input[0], float):
-            self.create_vector(user_input)
-        else:
-            self.create_matrix(user_input)
-
-    ## make a general function fro creating, and call it with a keyword and input the values
     def create_matrix(self, user_input):
         self.container = user_input
         self.height = len(user_input)
@@ -27,59 +20,31 @@ class Matrix:
         self.width = 1
         self.rref = None
 
-    # somehow make it so when matrice output there are large brackets 
     def __str__(self):
-        matrix_str = ""
-        for i in range(self.height):
-            for j in range(self.width):
-                matrix_str += str(self.container[i][j])
-                if j < self.width - 1:  # Add space if it's not the last element in the row
-                    matrix_str += ' '
-            if i < self.height - 1:  # Add newline if it's not the last row
-                matrix_str += '\n'
-        return matrix_str
+        return '\n'.join(' '.join(map(str, row)) for row in self.container)
 
-
-    def check_init(self, user_input):
+    def validate_input(self, user_input):
         if not isinstance(user_input, list) or not user_input:
             return "Matrix must be initialized with a non-empty list"
-
         if isinstance(user_input[0], list):
-            return self.check_matrix(user_input)
-        elif isinstance(user_input[0], int) or isinstance(user_input[0], float):
-            return self.check_all_ints(user_input)
-        else:
-            return "Invalid matrix initialization"
-
-    def check_matrix(self, user_input):
-        all_list = self.check_all_type_list(user_input)
-        if all_list is not None:
-            return all_list
-        return self.check_all_same_lengths(user_input)
-
-    def check_all_type_list(self, user_input):
-        for row in range(len(user_input)):
-            if not isinstance(user_input[row], list):
-                return f"Row {row + 1} is not a list"
-            all_ints = self.check_all_ints(user_input[row])
-            if all_ints:
-                return all_ints
+            return self.validate_matrix(user_input)
+        elif not all(isinstance(val, (int, float)) for val in user_input):
+            return "Vector must contain only numbers"
         return None
 
-    def check_all_same_lengths(self, user_input):
-        if len(user_input[0]) == 0:
-            return "Matrix must be initialized with a non-empty list"
-
-        for row in range(1, len(user_input)):
-            if len(user_input[row]) != len(user_input[row - 1]):
-                return f"Row {row + 1} has a different length than row {row}"
+    def validate_matrix(self, user_input):
+        for row in user_input:
+            if not isinstance(row, list):
+                return "Matrix must be a list of lists"
+            if not row:
+                return "Matrix must not contain empty rows"
+            if not all(isinstance(val, (int, float)) for val in row):
+                return "Matrix must contain only numbers"
+            if len(row) != len(user_input[0]):
+                return "All rows of the matrix must have the same length"
         return None
 
-    def check_all_ints(self, user_input):
-        for col in range(len(user_input)):
-            if not isinstance(user_input[col], int) and not isinstance(user_input[col], float):
-                return f"Must be all integers"
-        return None
+#Operations--------------------------------------------------------------------------------------------------------------------
 
     def check_before_operations(self, other):
         if self.height != other.height:
