@@ -1,3 +1,6 @@
+class MatrixInitializationError(Exception):
+    pass
+
 class Matrix:
     
     # rewrite for the case of [[1], [2], [3]] which is a vector 
@@ -23,6 +26,19 @@ class Matrix:
         self.height = len(user_input)
         self.width = 1
         self.rref = None
+
+    # somehow make it so when matrice output there are large brackets 
+    def __str__(self):
+        matrix_str = ""
+        for i in range(self.height):
+            for j in range(self.width):
+                matrix_str += str(self.container[i][j])
+                if j < self.width - 1:  # Add space if it's not the last element in the row
+                    matrix_str += ' '
+            if i < self.height - 1:  # Add newline if it's not the last row
+                matrix_str += '\n'
+        return matrix_str
+
 
     def check_init(self, user_input):
         if not isinstance(user_input, list) or not user_input:
