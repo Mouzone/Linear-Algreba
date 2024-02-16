@@ -24,7 +24,6 @@ def input_check(A, b):
         raise MatrixInitializationError("Matrix must be invertible")
 
 # input must be an invertible matrix, until invertibility check is found
-## can check for inveritbiltiy here, bc if encounter any 0 rows then it is not invertible in the U
 def alu_solve(A, b):
     input_check(A, b)
 
