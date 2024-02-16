@@ -1,6 +1,6 @@
 # input must be an invertible matrix, until invertibility check is found
-from linear_algebra.matrix.matrix import Matrix, MatrixInitializationError
-from linear_algebra.matrix import utility
+from linear_algebra.matrix import Matrix, MatrixInitializationError
+from linear_algebra import utility
 
 def alu_factorization(A):
     U = Matrix(A.container.copy())

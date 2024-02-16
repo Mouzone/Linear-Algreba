@@ -1,7 +1,7 @@
 import pytest
-from linear_algebra.matrix.matrix import Matrix, MatrixInitializationError
+from linear_algebra.matrix import Matrix, MatrixInitializationError
 from linear_algebra.solve.alu import alu_factorization, input_check, alu_solve
-from linear_algebra.matrix import utility
+from linear_algebra import utility
 
 class TestSolve_Requirements:
     def test_one_matrice(self):

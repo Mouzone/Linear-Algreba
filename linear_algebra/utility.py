@@ -1,4 +1,4 @@
-from linear_algebra.matrix.matrix import Matrix
+from linear_algebra.matrix import Matrix
 
 def identity_matrix(n):
     if n > 0:
