@@ -47,8 +47,9 @@ class Matrix:
                 return "All rows of the matrix must have the same length"
         return None
 
-#Operations--------------------------------------------------------------------------------------------------------------------
-
+# Operations--------------------------------------------------------------------------------------------------------------------
+    # rewrite the errror checking logic into somehting neater for mul and rmul
+    
     def check_before_operations(self, other):
         if self.height != other.height:
             raise MatrixInitializationError(f"Heights are incompatible")

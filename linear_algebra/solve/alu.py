@@ -3,33 +3,33 @@
 # returns error if it doesn't factor all the way with the check
 
 # input must be an invertible matrix, until invertibility check is found
-def alu_factorization(self):
-    copy = Matrix(self.container.copy())
-    result = Matrix.identity_matrix(copy.width)
+def alu_factorization(A):
+    U = Matrix(A.container.copy())
+    L = Matrix.identity_matrix(copy.width)
 
-    for i in range(copy.height):
+    for i in range(U.height):
         for  j in range(i):
-            if copy.container[j][j] != 0 and copy.container[i][j] != 0:
-                multiplier = -copy.container[i][j]/copy.container[j][j]
-                result.container[i][j] = copy.container[i][j]/copy.container[j][j]
-                copy.container[i] = [copy.container[i][pos] + multiplier * copy.container[j][pos] for pos in range(copy.width)]
-            # if not Matrix.check_finished(copy):
-            #     break
+            if U.container[j][j] != 0 and U.container[i][j] != 0:
+                multiplier = -U.container[i][j]/U.container[j][j]
+                L.container[i][j] = U.container[i][j]/U.container[j][j]
+                U.container[i] = [U.container[i][pos] + multiplier * U.container[j][pos] for pos in range(U.width)]
 
-    return result, copy #result is L, copy is U
+    return L, U #result is L, copy is U
             
+def input_check(A, b):
+    if not isinstance(b, Matrix):
+        raise MatrixInitializationError("Target must be Matrix")
+    elif A.height != b.height:
+        raise MatrixInitializationError("Dimensions are incompatible")
+    elif A.height != A.width:
+        raise MatrixInitializationError("Matrix must be invertible")
 
 # input must be an invertible matrix, until invertibility check is found
 ## can check for inveritbiltiy here, bc if encounter any 0 rows then it is not invertible in the U
-def alu_solve(self, target):
-    if not isinstance(target, Matrix):
-        raise MatrixInitializationError("Target must be Matrix")
-    elif self.height != target.height:
-        raise MatrixInitializationError("Dimensions are incompatible")
-    elif self.height != self.width:
-        raise MatrixInitializationError("Matrix must be invertible")
+def alu_solve(A, b):
+    input_check(A, B)
 
-    L, U = self.alu_factorization()
+    L, U = alu_factorization(A)
 
     # user forward substitution from top to bottom to find 'c'
     c = [0 for _ in range(L.width)]
