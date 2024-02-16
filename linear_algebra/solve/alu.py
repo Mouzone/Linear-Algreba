@@ -1,11 +1,10 @@
-# rewrite such that these are not class functions but general functions that take input
-# not .functions anymore
-# returns error if it doesn't factor all the way with the check
-
 # input must be an invertible matrix, until invertibility check is found
+from linear_algebra.matrix.matrix import Matrix, MatrixInitializationError
+from linear_algebra.matrix import utility
+
 def alu_factorization(A):
     U = Matrix(A.container.copy())
-    L = Matrix.identity_matrix(copy.width)
+    L = utility.identity_matrix(U.width)
 
     for i in range(U.height):
         for  j in range(i):
@@ -27,14 +26,14 @@ def input_check(A, b):
 # input must be an invertible matrix, until invertibility check is found
 ## can check for inveritbiltiy here, bc if encounter any 0 rows then it is not invertible in the U
 def alu_solve(A, b):
-    input_check(A, B)
+    input_check(A, b)
 
     L, U = alu_factorization(A)
 
     # user forward substitution from top to bottom to find 'c'
     c = [0 for _ in range(L.width)]
     for row in range(L.height):
-        c[row] = target.container[row][0] - sum([c[col] * L.container[row][col] for col in range(L.width)])
+        c[row] = b.container[row][0] - sum([c[col] * L.container[row][col] for col in range(L.width)])
     
     # solving by backwards plugging
     answer = [0 for _ in range(U.height)]

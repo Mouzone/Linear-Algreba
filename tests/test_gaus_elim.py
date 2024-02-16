@@ -1,3 +1,17 @@
+class TestCheck_Finished:
+
+    def test_has_upper_elements(self):
+        matrix = Matrix([[1, 0.2, 0.3, 0.4], [0, 1, 0.5, 0.6], [0, 0, 1, 0.7], [0, 0, 0, 1]])
+        assert Matrix.check_finished(matrix, matrix.width) == True
+
+    def test_pivot_is_not_1(self):
+        matrix = Matrix([[1, 0.2, 0.3, 0.4], [0, 1, 0.5, 0.6], [0, 0, 1, 0.7], [0, 0, 0, 5]])
+        assert Matrix.check_finished(matrix, matrix.width) == False
+
+    def lower_has_elements(self):
+        matrix = Matrix([[1, 0.2, 0.3, 0.4], [1, 1, 0.5, 0.6], [0, 0, 1, 0.7], [3, 4, 0, 1]])
+        assert Matrix.check_finished(matrix, matrix.width) == False
+
 class TestAppendMatrix:
     def test_sample_matrices():
         matrix1 = Matrix([[1, 2], [3, 4]])
