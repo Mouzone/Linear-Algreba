@@ -1,8 +1,3 @@
-# maybe make an augmented matrix class that inherits from matrix class
-# only difference is it has a border attribute
-# has a rref container as well
-# make the class take an A and b matrix
-# then call the function .guassian_elimination() to solve like sklearn calling fit_transform
 from linear_algebra.matrix import Matrix, MatrixInitializationError
 class Aug_matrix:
     def __init__(self, A, b):
@@ -13,17 +8,12 @@ class Aug_matrix:
         self.rref = None
         self.solution = None
 
-    # return whatever the  thing at the end is even if it is not identity matrix
-    # also be able to return the vectors like null space would return the free varaible vectors
     def gaussian_elimination(self):
-        # add logic to check conmpatibility
-        # rearrange
-        # iterate by column
         for i in range(self.height):
             self.container = Matrix.rearrange_rows(self, i)
             self.container = Matrix.reduce(self, i)
 
-            if Matrix.check_finished(self, border):
+            if Matrix.check_finished(self, self.border):
                 self.rref = Matrix([row[border: ] for row in self.container])
                 break
         
@@ -36,7 +26,6 @@ class Aug_matrix:
         
         return 
 
-# useless for now until implement gaussian elimination
 def rearrange_rows(input_matrix, start):
     result = input_matrix.container
     iterations = min(input_matrix.height, input_matrix.width)
@@ -57,7 +46,6 @@ def rearrange_rows(input_matrix, start):
     
     return result
 
-# useless for now until implement gaussian elimination
 def reduce(input_matrix, start):
     result = input_matrix.container
     to_divide = result[start][start]
