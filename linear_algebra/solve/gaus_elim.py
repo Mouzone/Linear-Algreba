@@ -1,3 +1,43 @@
+# maybe make an augmented matrix class that inherits from matrix class
+# only difference is it has a border attribute
+# has a rref container as well
+# make the class take an A and b matrix
+# then call the function .guassian_elimination() to solve like sklearn calling fit_transform
+from linear_algebra.matrix import Matrix, MatrixInitializationError
+class Aug_matrix:
+    def __init__(self, A, b):
+        check_input(A, b)
+        self.container = [A.container[i] + b.container[i] for i in range(A.height)]
+        height = A.height
+        border = A.width
+        rref = None
+
+    # return whatever the  thing at the end is even if it is not identity matrix
+    # also be able to return the vectors like null space would return the free varaible vectors
+    def gaussian_elimination(self):
+        # add logic to check conmpatibility
+        # rearrange
+        # iterate by column
+        for i in range(self.height):
+            self.container = Matrix.rearrange_rows(self, i)
+            self.container = Matrix.reduce(self, i)
+
+            if Matrix.check_finished(self, border):
+                return Matrix([row[border: ] for row in self.container])
+                break
+
+        return_items = []
+        # save rref as something unique to each
+        # same for nullspace, column space, rowspace as something unique to each matrix made
+        # raise MatrixInitializationError(f"Types are incompatible")   
+
+        # return_items if doesn't work then return the incomplete rref for cases like null space
+        if rref:
+            return_items.append(self)
+        if Matrix.check_finished(self, border):
+            return_items.append(Matrix([row[border: ] for row in self.container]))
+        return return_items
+
 # useless for now until implement gaussian elimination
 def rearrange_rows(input_matrix, start):
     result = input_matrix.container
@@ -32,10 +72,17 @@ def reduce(input_matrix, start):
 
     return Matrix(result)
 
-def check_finished(input_matrix, border):
+def check_input(A, b):
+    if not (isinstance(A, Matrix) or isinstance(b, Matrix)):
+        raise MatrixInitializationError(f"Inputs must be Matrices")
+    if A.height != b.height:
+        raise MatrixInitializationError(f"Dimensions are not compatible")
+    return
+
+def check_finished(input_matrix):
     # it is done if everything is 0 and diagonal is 1
     # it is also done if pivots are 1 and everything else is 0 
-    for i in range(border):
+    for i in range(input_matrix.border):
         for  j in range(i+1):
             if i == j:
                 if input_matrix.container[i][j] != 1:
@@ -45,34 +92,3 @@ def check_finished(input_matrix, border):
                     return False
 
     return True
-
-def append(self, target):
-    return Matrix([self.container[i] + target.container[i] for i in range(self.height)]), self.width
-
-# return whatever the  thing at the end is even if it is not identity matrix
-# also be able to return the vectors like null space would return the free varaible vectors
-
-def gaussian_elimination(self, target, rref=False):
-    # add logic to check conmpatibility
-    augmented_matrix, border = Matrix.append(self, target)
-    # rearrange
-    # iterate by column
-    for i in range(augmented_matrix.height):
-        augmented_matrix = Matrix.rearrange_rows(augmented_matrix, i)
-        augmented_matrix = Matrix.reduce(augmented_matrix, i)
-
-        if Matrix.check_finished(augmented_matrix, border):
-            return Matrix([row[border: ] for row in augmented_matrix.container])
-            break
-
-    return_items = []
-    # save rref as something unique to each
-    # same for nullspace, column space, rowspace as something unique to each matrix made
-    # raise MatrixInitializationError(f"Types are incompatible")   
-
-    # return_items if doesn't work then return the incomplete rref for cases like null space
-    if rref:
-        return_items.append(augmented_matrix)
-    if Matrix.check_finished(augmented_matrix, border):
-        return_items.append(Matrix([row[border: ] for row in augmented_matrix.container]))
-    return return_items
