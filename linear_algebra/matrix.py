@@ -14,10 +14,13 @@ class Matrix:
     def create_container(self, user_input, isVector):
         if isVector:
             self.container = [[value] for value in user_input]
+            self.width = 1 # has to manually set since integers do not have len function
+
         else:
             self.container = user_input
+            self.width = len(user_input[0])
+
         self.height = len(user_input)
-        self.width = len(user_input[0])
 
     def __str__(self):
         return '\n'.join(' '.join(map(str, row)) for row in self.container)

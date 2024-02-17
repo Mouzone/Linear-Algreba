@@ -1,6 +1,6 @@
 import pytest
-from linear_algebra.matrix.matrix import Matrix, MatrixInitializationError
-from linear_algebra.matrix import utility
+from linear_algebra.matrix import Matrix, MatrixInitializationError
+from linear_algebra import utility
 
 class TestFlatten_Print:
     # flatten
