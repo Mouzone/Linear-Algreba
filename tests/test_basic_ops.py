@@ -1,24 +1,24 @@
 import pytest
-from linear_algebra.matrix import Matrix, MatrixInitializationError
+from linear_algebra.matrix import *
 
 class TestAdditionSubtraction:
     def test_check_before_operations_same_dimensions(self):
         matrix1 = Matrix([[1, 2], [3, 4]])
         matrix2 = Matrix([[5, 6], [7, 8]])
         # Should not raise any exceptions
-        matrix1.check_before_operations(matrix2)
+        check_before_operations(matrix1, matrix2)
 
     def test_check_before_operations_different_heights(self):
         matrix1 = Matrix([[1, 2], [3, 4]])
         matrix2 = Matrix([[5, 6]])
         with pytest.raises(MatrixInitializationError, match="Heights are incompatible"):
-            matrix1.check_before_operations(matrix2)
+            check_before_operations(matrix1, matrix2)
 
     def test_check_before_operations_different_widths(self):
         matrix1 = Matrix([[1, 2], [3, 4]])
         matrix2 = Matrix([[5, 6, 7], [8, 9, 10]])
         with pytest.raises(MatrixInitializationError, match="Widths are incompatible"):
-            matrix1.check_before_operations(matrix2)
+            check_before_operations(matrix1, matrix2)
 
     def test_matrix_addition(self):
         matrix1 = Matrix([[1, 2], [3, 4]])

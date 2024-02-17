@@ -3,7 +3,7 @@ class MatrixInitializationError(Exception):
 
 class Matrix:
     def __init__(self, user_input):
-        error = self.validate_input(user_input)
+        error = validate_input(user_input)
         if error:
             raise MatrixInitializationError(f"Matrix Initialization Error: {error}")
         if isinstance(user_input[0], list):
@@ -31,7 +31,7 @@ class Matrix:
 # Operations--------------------------------------------------------------------------------------------------------------------
                 
     def __add__(self, other):
-        checks.check_before_operations(self, other)
+        check_before_operations(self, other)
         result = [
             [self.container[i][j] + other.container[i][j] for j in range(self.width)]
             for i in range(self.height)
@@ -39,7 +39,7 @@ class Matrix:
         return Matrix(result)
 
     def __sub__(self, other):
-        checks.check_before_operations(self, other)
+        check_before_operations(self, other)
         result = [
             [self.container[i][j] - other.container[i][j] for j in range(self.width)]
             for i in range(self.height)
@@ -49,7 +49,7 @@ class Matrix:
     def __mul__(self, other):
         # self and other are matrices
         # matrix_1 row i_1 * matrix_2_transposed row i_1 ...
-        checks.check_mul(self, other)
+        check_mul(self, other)
         if isinstance(self, Matrix) and isinstance(other, Matrix):
             other_transpose = other.transpose()
 
@@ -69,7 +69,7 @@ class Matrix:
         return Matrix(result)
 
     def __rmul__(self, other):
-        checks.check_mul(self, other)
+        check_mul(self, other)
         result = []
         for i in range(self.height):
             result.append([other * val for val in self.container[i]])
@@ -90,7 +90,7 @@ def validate_input(user_input):
     if not isinstance(user_input, list) or not user_input:
         return "Matrix must be initialized with a non-empty list"
     if isinstance(user_input[0], list):
-        return self.validate_matrix(user_input)
+        return validate_matrix(user_input)
     elif not all(isinstance(val, (int, float)) for val in user_input):
         return "Vector must contain only numbers"
     return None
