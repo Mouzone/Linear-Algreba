@@ -29,28 +29,30 @@ class Matrix:
         return [element for row in self.container for element in row]
 
 # Operations--------------------------------------------------------------------------------------------------------------------
-                
-    def __add__(self, other):
+
+    # is the function that addition and sub inherits from since both share the same code            
+    def __add_sub(self, other, operation):
         check_add_sub(self, other)
         result = [
-            [self.container[i][j] + other.container[i][j] for j in range(self.width)]
+            [
+                self.container[i][j] + other.container[i][j] if operation == "add" else self.container[i][j] - other.container[i][j]
+                for j in range(self.width)
+            ]
             for i in range(self.height)
         ]
         return Matrix(result)
 
+    def __add__(self, other):
+        return self.__add_sub(other, "add")
+
     def __sub__(self, other):
-        check_add_sub(self, other)
-        result = [
-            [self.container[i][j] - other.container[i][j] for j in range(self.width)]
-            for i in range(self.height)
-        ]
-        return Matrix(result)
+        return self.__add_sub(other, "sub")
 
     def __mul__(self, other):
         # self and other are matrices
         # matrix_1 row i_1 * matrix_2_transposed row i_1 ...
         check_mul(self, other)
-        if isinstance(self, Matrix) and isinstance(other, Matrix):
+        if isinstance(other, Matrix):
             other_transpose = other.transpose()
 
             result = [[0 for _ in range(other_transpose.height)] for _ in range(self.height)]
