@@ -8,9 +8,10 @@ class Aug_matrix:
     def __init__(self, A, b):
         check_input(A, b)
         self.container = [A.container[i] + b.container[i] for i in range(A.height)]
-        height = A.height
-        border = A.width
-        rref = None
+        self.height = A.height
+        self.border = A.width
+        self.rref = None
+        self.solution = None
 
     # return whatever the  thing at the end is even if it is not identity matrix
     # also be able to return the vectors like null space would return the free varaible vectors
@@ -23,20 +24,17 @@ class Aug_matrix:
             self.container = Matrix.reduce(self, i)
 
             if Matrix.check_finished(self, border):
-                return Matrix([row[border: ] for row in self.container])
+                self.rref = Matrix([row[border: ] for row in self.container])
                 break
-
-        return_items = []
-        # save rref as something unique to each
-        # same for nullspace, column space, rowspace as something unique to each matrix made
-        # raise MatrixInitializationError(f"Types are incompatible")   
-
-        # return_items if doesn't work then return the incomplete rref for cases like null space
-        if rref:
-            return_items.append(self)
-        if Matrix.check_finished(self, border):
-            return_items.append(Matrix([row[border: ] for row in self.container]))
-        return return_items
+        
+        self.rref = self.container
+        if check_finished(self):
+            self.solution = Matrix([row[border: ] for row in self.container])
+        else:
+            # figure out how to return solution when it is not unique
+            return
+        
+        return 
 
 # useless for now until implement gaussian elimination
 def rearrange_rows(input_matrix, start):
@@ -57,7 +55,7 @@ def rearrange_rows(input_matrix, start):
         result.remove(largest)
         result.insert(i, largest)
     
-    return Matrix(result)
+    return result
 
 # useless for now until implement gaussian elimination
 def reduce(input_matrix, start):
@@ -70,13 +68,14 @@ def reduce(input_matrix, start):
             list_to_subtract = [result[i][start] * element for element in result[start]]
             result[i] = [element_1 - element_2 for element_1, element_2 in zip(result[i], list_to_subtract)]
 
-    return Matrix(result)
+    return result
 
 def check_input(A, b):
     if not (isinstance(A, Matrix) or isinstance(b, Matrix)):
         raise MatrixInitializationError(f"Inputs must be Matrices")
     if A.height != b.height:
         raise MatrixInitializationError(f"Dimensions are not compatible")
+
     return
 
 def check_finished(input_matrix):
