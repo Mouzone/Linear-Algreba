@@ -6,19 +6,18 @@ class Matrix:
         error = self.validate_input(user_input)
         if error:
             raise MatrixInitializationError(f"Matrix Initialization Error: {error}")
-        self.create_matrix(user_input) if isinstance(user_input[0], list) else self.create_vector(user_input)
+        if isinstance(user_input[0], list):
+            self.create_container(user_input, False) 
+        else:
+            self.create_container(user_input, True)
 
-    def create_matrix(self, user_input):
-        self.container = user_input
+    def create_container(self, user_input, isVector):
+        if isVector:
+            self.container = [[value] for value in user_input]
+        else:
+            self.container = user_input
         self.height = len(user_input)
         self.width = len(user_input[0])
-        self.rref = None
-
-    def create_vector(self, user_input):
-        self.container = [[value] for value in user_input]
-        self.height = len(user_input)
-        self.width = 1
-        self.rref = None
 
     def __str__(self):
         return '\n'.join(' '.join(map(str, row)) for row in self.container)
