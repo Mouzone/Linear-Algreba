@@ -15,14 +15,6 @@ def alu_factorization(A):
 
     return L, U #result is L, copy is U
             
-def input_check(A, b):
-    if not isinstance(b, Matrix):
-        raise MatrixInitializationError("Target must be Matrix")
-    elif A.height != b.height:
-        raise MatrixInitializationError("Dimensions are incompatible")
-    elif A.height != A.width:
-        raise MatrixInitializationError("Matrix must be invertible")
-
 # input must be an invertible matrix, until invertibility check is found
 def alu_solve(A, b):
     input_check(A, b)
@@ -40,3 +32,13 @@ def alu_solve(A, b):
         answer[row] = c[row] - sum([answer[col] * U.container[row][col] for col in range(U.width)])
     
     return Matrix(answer)
+
+def input_check(A, b):
+    if not isinstance(b, Matrix):
+        raise MatrixInitializationError("Target must be Matrix")
+    elif not isinstance(A, Matrix):
+        raise MatrixInitializationError("A must be Matrix")
+    elif A.height != b.height:
+        raise MatrixInitializationError("Dimensions are incompatible")
+    elif A.height != A.width:
+        raise MatrixInitializationError("Matrix must be invertible")
