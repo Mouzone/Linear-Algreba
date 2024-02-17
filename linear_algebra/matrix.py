@@ -3,7 +3,7 @@ class MatrixInitializationError(Exception):
 
 class Matrix:
     def __init__(self, user_input):
-        error = validate_input(user_input)
+        error = check_input(user_input)
         if error:
             raise MatrixInitializationError(f"Matrix Initialization Error: {error}")
         if isinstance(user_input[0], list):
@@ -31,7 +31,7 @@ class Matrix:
 # Operations--------------------------------------------------------------------------------------------------------------------
                 
     def __add__(self, other):
-        check_before_operations(self, other)
+        check_add_sub(self, other)
         result = [
             [self.container[i][j] + other.container[i][j] for j in range(self.width)]
             for i in range(self.height)
@@ -39,7 +39,7 @@ class Matrix:
         return Matrix(result)
 
     def __sub__(self, other):
-        check_before_operations(self, other)
+        check_add_sub(self, other)
         result = [
             [self.container[i][j] - other.container[i][j] for j in range(self.width)]
             for i in range(self.height)
@@ -86,16 +86,17 @@ class Matrix:
 
         return Matrix(result)
 
-def validate_input(user_input):
+def check_input(user_input):
     if not isinstance(user_input, list) or not user_input:
         return "Matrix must be initialized with a non-empty list"
     if isinstance(user_input[0], list):
-        return validate_matrix(user_input)
+        return check_matrix(user_input)
+    # below validates vector
     elif not all(isinstance(val, (int, float)) for val in user_input):
         return "Vector must contain only numbers"
     return None
 
-def validate_matrix(user_input):
+def check_matrix(user_input):
     for row in user_input:
         if not isinstance(row, list):
             return "Matrix must be a list of lists"
@@ -107,7 +108,7 @@ def validate_matrix(user_input):
             return "All rows of the matrix must have the same length"
     return None
     
-def check_before_operations(left, right):
+def check_add_sub(left, right):
     if left.height != right.height:
         raise MatrixInitializationError(f"Heights are incompatible")
     if left.width != right.width:
