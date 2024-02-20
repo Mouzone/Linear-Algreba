@@ -33,6 +33,12 @@ class TestFactorization:
         U_correct = Matrix([[1, 2, 3], [0, -1, -5], [0, 0, -31]])
         assert L.container == L_correct.container
         assert U.container == U_correct.container
+    
+    def test_singular_1(self):
+        matrix = Matrix([[1,2,3], [2,4,6], [3,6,9]])
+        L, U = alu_factorization(matrix)
+        U_actual = Matrix([[1,2,3], [0,0,0], [0,0,0]])
+        assert U.container == U_actual.container
 
 class TestALU_Solve:
 

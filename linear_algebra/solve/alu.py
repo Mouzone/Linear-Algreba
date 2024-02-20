@@ -2,6 +2,7 @@
 from linear_algebra.matrix import Matrix, MatrixInitializationError
 from linear_algebra import utility
 
+# alu_factorizztion returns rref form if a matrix is square for U!!
 def alu_factorization(A):
     U = Matrix(A.container.copy())
     L = utility.identity_matrix(U.width)
