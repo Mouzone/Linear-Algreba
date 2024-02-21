@@ -1,6 +1,7 @@
 # nullspace including special vectors
 # rank, cokumn space, lienar independence
 # vector space for col space and null space
+# mayeb rewrite from the beginning starting with space instead of gaus elim
 def null_space(self):
     zero_vector = Matrix([[0] for i in self.height])
     original = Matrix(self.container.copy())

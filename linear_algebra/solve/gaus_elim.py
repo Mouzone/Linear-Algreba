@@ -39,7 +39,7 @@ def rearrange_rows(input_matrix, start):
             if abs(largest[i]) < abs(input_matrix.container[j][i]):
                 largest = input_matrix.container[j]
             elif abs(largest[i]) == abs(input_matrix.container[j][i]):
-                for k in range(i+1, input_matrix.width):
+                for k in range(i+1, input_matrix.border):
                     if largest[k] < input_matrix.container[j][k]:
                         largest = input_matrix.container[j]
                         break
@@ -113,7 +113,7 @@ def check_upper_triangular(input_matrix):
 
     return True
 
-# we already know it is upper traingular, now check if singular
+# we already know it is upper traingular, now check if singular (0 rows or free columns)
 def check_unique(input_matrix):
     iterations = min(input_matrix.height, input_matrix.border)
     for i in range(iterations):
