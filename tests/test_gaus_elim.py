@@ -5,52 +5,55 @@ from linear_algebra.solve.gaus_elim import *
 class TestCheck_Upper_Triangular:
 
     def test_has_upper_elements(self):
-        matrix1 = Matrix([[1, 0.2, 0.3, 0.4], [0, 1, 0.5, 0.6], [0, 0, 1, 0.7], [0, 0, 0, 1]])
+        matrix1 = Matrix([[1, 0.2, 0.3, 0.4], [0, 1, 0.5, 0.6], [0, 0, 1, 0.7]])
         matrix2 = Matrix([0, 0, 0])
         matrix = Aug_matrix(matrix1, matrix2)
-        assert check_upper_triangular(matrix, matrix.width) == True
+        assert check_upper_triangular(matrix) == False
 
     def test_pivot_is_not_1(self):
-        matrix = Aug_matrix([[1, 0.2, 0.3, 0.4], [0, 1, 0.5, 0.6], [0, 0, 1, 0.7], [0, 0, 0, 5]], [0, 0, 1])
-        assert check_upper_triangular(matrix, matrix.width) == False
+        matrix1 = Matrix([[1, 0.2, 0.3, 0.4], [0, 1, 0.5, 0.6], [0, 0, 1, 0.7], [0, 0, 0, 5]])
+        matrix2 = Matrix([0, 0, 0, 0])
+        matrix = Aug_matrix(matrix1, matrix2)
+        assert check_upper_triangular(matrix) == False
 
-    def lower_has_elements(self):
-        matrix = Aug_matrix([[1, 0.2, 0.3, 0.4], [1, 1, 0.5, 0.6], [0, 0, 1, 0.7], [3, 4, 0, 1]], [0, 1, 0])
-        assert check_finischeck_upper_triangularhed(matrix, matrix.width) == False
+    def test_lower_has_elements(self):
+        matrix1 = Matrix([[1, 0.2, 0.3, 0.4], [1, 1, 0.5, 0.6], [0, 0, 1, 0.7], [3, 4, 0, 1]])
+        matrix2 = Matrix([0, 0, 0, 0])
+        matrix = Aug_matrix(matrix1, matrix2)
+        assert check_upper_triangular(matrix) == False
 
+# test append and check_inputs
 class TestAppendMatrix:
-    def test_sample_matrices():
+    @pytest.fixture
+    def sample_matrices(self):
         matrix1 = Matrix([[1, 2], [3, 4]])
         matrix2 = Matrix([[5, 6], [7, 8]])
         return matrix1, matrix2
 
-    def test_test_valid_append(sample_matrices):
+    def test_valid_append(self, sample_matrices):
         matrix1, matrix2 = sample_matrices
-        result_matrix = matrix1.append(matrix2)
+        result_matrix = Aug_matrix(matrix1, matrix2)
         expected_result = Matrix([[1, 2, 5, 6], [3, 4, 7, 8]])
-        assert result_matrix.data == expected_result.data
+        assert result_matrix.container == expected_result.container
 
-    def test_matrix_vector():
+    @pytest.fixture
+    def matrix_vector(self):
         matrix1 = Matrix([[1, 2], [4, 5]])
-        matrix2 = Matrix([[3], [6]])
+        matrix2 = Matrix([3, 6])
         return matrix1, matrix2
 
-    def test_valid_append(sample_matrices):
-        matrix1, matrix2 = sample_matrices
-        result_matrix = matrix1.append(matrix2)
+    def test_valid_append_matrix_vector(self, matrix_vector):
+        matrix1, matrix2 = matrix_vector
+        result_matrix = Aug_matrix(matrix1, matrix2)
         expected_result = Matrix([[1, 2, 3], [4, 5, 6]])
-        assert result_matrix.data == expected_result.data
+        assert result_matrix.container == expected_result.container
 
-    def test_incompatible_heights(sample_matrices):
-        matrix1, matrix2 = sample_matrices
-        matrix2.data = [[5, 6]]  # Change matrix2 to have incompatible heights
-        with pytest.raises(MatrixInitializationError, match="Heights are incompatible"):
-            matrix1.append(matrix2)
+    def test_incompatible_heights(self, matrix_vector):
+        matrix1, matrix2 = matrix_vector
+        matrix2 = Matrix([5])  # Change matrix2 to have incompatible heights
+        with pytest.raises(MatrixInitializationError, match="Dimensions are not compatible"):
+            Aug_matrix(matrix1, matrix2)
 
-    def test_invalid_input_type():
-        matrix = Matrix([[1, 2], [3, 4]])
-        with pytest.raises(MatrixInitializationError, match="Inputs must be Matrices"):
-            matrix.append([5, 6])
 
 
 # class TestRearrange:

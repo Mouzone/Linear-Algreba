@@ -2,7 +2,6 @@ from linear_algebra.matrix import Matrix, MatrixInitializationError
 
 class Aug_matrix:
     def __init__(self, A, b):
-
         check_input(A, b)
         self.A = A
         self.b = b
@@ -93,7 +92,6 @@ def check_input(A, b):
         raise MatrixInitializationError(f"Inputs must be Matrices")
     if A.height != b.height:
         raise MatrixInitializationError(f"Dimensions are not compatible")
-
     return
 
 # returns true if it is upper triangular (so unique and singular matrices return once pivots reduce to 1

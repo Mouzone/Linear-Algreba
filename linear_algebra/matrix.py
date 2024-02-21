@@ -1,6 +1,7 @@
 class MatrixInitializationError(Exception):
     pass
 
+# weridly initializes [[0,0,0,0]]
 class Matrix:
     def __init__(self, user_input):
         error = check_input(user_input)
