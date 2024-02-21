@@ -76,10 +76,10 @@ class TestRearrange:
     def test_height_greater_than_width(self):
         matrix1 =  Matrix([[5, 2], [1, 6], [9, 4], [2, 8], [7, 3], [4, 9], [3, 1], [6, 7]])
         matrix2 = Matrix([8, 3, 7, 1, 6, 5, 2, 4])
-        matrix = Matrix([[5, 2, 8], [1, 6, 3], [9, 4, 7], [2, 8, 1], [7, 3, 6], [4, 9, 5], [3, 1, 2], [6, 7, 4]])
+        matrix = Aug_matrix(matrix1, matrix2)
         correct_matrix = Matrix([[9, 4, 7], [4, 9, 5], [5, 2, 8], [1, 6, 3], [2, 8, 1], [7, 3, 6], [3, 1, 2], [6, 7, 4]])
         matrix = rearrange_rows(matrix, 0)
-        assert matrix.container == correct_matrix.container
+        assert matrix == correct_matrix.container
 
     def test_width_greater_than_height(self):
         matrix = Matrix([[4, 2, 7, 1, 9], [6, 3, 8, 5, 2], [1, 9, 4, 7, 3]])
