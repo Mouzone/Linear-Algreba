@@ -96,9 +96,9 @@ def check_unique(A, tolerance=1e-9):
     # id_matrix = identity_matrix(len(A))
     # use epsilon function to check values against the tolerance
     # return all(all(abs(val1 - val2) < tolerance for val1, val2 in zip(row1, row2)) for row1, row2 in zip(A, id_matrix.container))
-    if len(A) != len(len(A)):
+    if len(A) != len(A[0]):
         return False
-        
+
     for i in range(len(A)):
         for j in range(len(A)):
             if j == i:
