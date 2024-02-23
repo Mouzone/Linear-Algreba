@@ -21,15 +21,14 @@ class Aug_matrix:
             if check_upper_triangular(self):
                 break
         
-        # self.container should now be in rref form
+        # self.container should now be in rref form, reduced such that all pivot cols are only pivots and 0s
         self.rref = [row[:self.border] for row in self.container]
-        # return the basis of the solution space
+        # if square and full rank
         if check_unique(self.rref): # no free variables, square matrix
             self.solution = Matrix([row[self.border:] for row in self.container])
             print("Unique")
         else:
-            self.solution = list(find_special_solutions(self))
-            self.solution = [Matrix(solution) for solution in self.solution]
+            self.solution = Matrix(find_special_solutions(self))
             print("Not Unique")
 
 def rearrange_rows(input_matrix, start):
@@ -65,9 +64,21 @@ def reduce(input_matrix, start):
     return result
 
 def find_special_solutions(input_matrix):
-    # figure out how to steal A=LU's back propagation which only works if it is upper triangular
-    # which should be valid for matrices since gaussian elimination at the end will result upper triangular
+    rref = self.rref
+    # if infinite return the positions of the free variables
+    # if singular or no solution return positions of the 0
+    special = {}
+    special["free cols"] = []
+    special["zero rows"] = []
     
+    for row in range(len(rref)):
+        if all(element == 0 for element in rref[row]):
+            special["zero row"].append(row)
+    
+    # check for free cols
+    for col in range(len(rref[0])):
+        for row in range(len(rref)):
+            if rref[row][col] 
     return 
 
 def check_input(A, b):
