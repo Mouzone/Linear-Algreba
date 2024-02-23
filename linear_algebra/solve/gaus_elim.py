@@ -65,6 +65,9 @@ def reduce(input_matrix, start):
     return result
 
 def find_special_solutions(input_matrix):
+    # figure out how to steal A=LU's back propagation which only works if it is upper triangular
+    # which should be valid for matrices since gaussian elimination at the end will result upper triangular
+    
     return 
 
 def check_input(A, b):
@@ -72,6 +75,8 @@ def check_input(A, b):
         raise MatrixInitializationError(f"Inputs must be Matrices")
     if A.height != b.height:
         raise MatrixInitializationError(f"Dimensions are not compatible")
+    if b.width != 1:
+        raise MatrixInitializationError(f"b is not a vector")
     return
 
 # returns true if it is upper triangular (so unique and singular matrices return once pivots reduce to 1
