@@ -137,5 +137,5 @@ class TestGaussianElimination:
         b = Matrix([5, 21])
         x = Aug_matrix(A,b)
         x.gaussian_elimination()
-        answer = Matrix([3.0, 1.0])
+        answer = Matrix([[3.0], [1.0]])
         assert x.solution == answer.container

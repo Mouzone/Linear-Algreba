@@ -22,14 +22,15 @@ class Aug_matrix:
                 break
         
         # self.container should now be in rref form
-        # figure out special solutions check
         self.rref = [row[:self.border] for row in self.container]
+        # return the basis of the solution space
         if check_unique(self.rref): # no free variables, square matrix
-            self.solution = [row[self.border:] for row in self.container]
+            self.solution = Matrix([row[self.border:] for row in self.container]).transpose()
             return "Unique"
         else:
+            self.solution = list(find_special_solutions(self))
+            self.solution = [Matrix(solution).transpose() for solution in self.solution]
             return "Not Unique" 
-            # then go into space and use space to figure out free variables or some other method
 
 def rearrange_rows(input_matrix, start):
     result = input_matrix.container
@@ -63,31 +64,8 @@ def reduce(input_matrix, start):
 
     return result
 
-# def find_special_solutions(input_matrix):
-#     input_matrix_copy = input_matrix.container.copy()
-#     columns = input_matrix.A.transpose()
-#     free_positions = []
-#     pivot_positions = []
-#     for col in range(input_matrix.border):
-#         if sum(input_matrix.container[col]) not in [0, 1]:
-#             free_positions.append(col)
-#         else:
-#             pivot_positions.append(col)
-
-#     # now we have the positions of the free columns 
-#     # create the solution vecotrs by plugging values in the free positions
-#     answers = [[0 for _ in range(input_matrix.border)] for _ in range(len(free_positions))]
-#     for position, answer in zip(free_positions, answers):
-#         answer[position] = 0
-#         for pivot_position in pivot_positions:
-#             answer[pivot_position] = 1
-    
-#     # now we have solution vectors for the free variables
-#     # multiply each row from bottom to top whatever row sums to divide right by the left sum and set that as answer position's answer
-#     # if it divides by 0 and the other value is not 0 break and let it stay as none, if both are 0 move to next row and let stay as is
-#     for answer in answers:
-#         for row in range(input_matrix.height-1, -1, -1):
-#             b[val] - sum([answer[col] * input_matrix_copy[row][col] for col in range(len(answer))])
+def find_special_solutions(input_matrix):
+    return 
 
 def check_input(A, b):
     if not (isinstance(A, Matrix) or isinstance(b, Matrix)):
@@ -116,9 +94,9 @@ def check_upper_triangular(input_matrix):
     return True
 
 def check_unique(A, tolerance=1e-9):
-    id_matrix = identity_matrix(len(A))
+    # id_matrix = identity_matrix(len(A))
     # use epsilon function to check values against the tolerance
-    return all(all(abs(val1 - val2) < tolerance for val1, val2 in zip(row1, row2)) for row1, row2 in zip(A, id_matrix.container))
+    # return all(all(abs(val1 - val2) < tolerance for val1, val2 in zip(row1, row2)) for row1, row2 in zip(A, id_matrix.container))
     for i in range(len(A)):
         for j in range(len(A)):
             if j == i:
