@@ -25,12 +25,12 @@ class Aug_matrix:
         self.rref = [row[:self.border] for row in self.container]
         # return the basis of the solution space
         if check_unique(self.rref): # no free variables, square matrix
-            self.solution = Matrix([row[self.border:] for row in self.container]).transpose()
-            return "Unique"
+            self.solution = Matrix([row[self.border:] for row in self.container])
+            print("Unique")
         else:
             self.solution = list(find_special_solutions(self))
-            self.solution = [Matrix(solution).transpose() for solution in self.solution]
-            return "Not Unique" 
+            self.solution = [Matrix(solution) for solution in self.solution]
+            print("Not Unique")
 
 def rearrange_rows(input_matrix, start):
     result = input_matrix.container
@@ -78,7 +78,6 @@ def check_input(A, b):
 # fails it is not square since the border is only n, but we should check the m rows when m > n
 def check_upper_triangular(input_matrix):
     # it is done if everything is 0 and diagonal is 1
-    # it is also done if pivots are 1 and everything else is 0 
     iterations = min(input_matrix.height, input_matrix.border)
     for i in range(iterations):
         for  j in range(i+1):
@@ -97,6 +96,9 @@ def check_unique(A, tolerance=1e-9):
     # id_matrix = identity_matrix(len(A))
     # use epsilon function to check values against the tolerance
     # return all(all(abs(val1 - val2) < tolerance for val1, val2 in zip(row1, row2)) for row1, row2 in zip(A, id_matrix.container))
+    if len(A) != len(len(A)):
+        return False
+        
     for i in range(len(A)):
         for j in range(len(A)):
             if j == i:
