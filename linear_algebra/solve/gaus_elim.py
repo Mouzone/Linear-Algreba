@@ -22,12 +22,14 @@ class Aug_matrix:
                 break
         
         # self.container should now be in rref form
+        # figure out special solutions check
         self.rref = [row[:self.border] for row in self.container]
-        if check_unique(self.rref): # no free variables
+        if check_unique(self.rref): # no free variables, square matrix
             self.solution = [row[self.border:] for row in self.container]
-        # else: # has free variables
-        #     self.solution = find_special_solutions(self)
-        return 
+            return "Unique"
+        else:
+            return "Not Unique" 
+            # then go into space and use space to figure out free variables or some other method
 
 def rearrange_rows(input_matrix, start):
     result = input_matrix.container
@@ -117,4 +119,13 @@ def check_unique(A, tolerance=1e-9):
     id_matrix = identity_matrix(len(A))
     # use epsilon function to check values against the tolerance
     return all(all(abs(val1 - val2) < tolerance for val1, val2 in zip(row1, row2)) for row1, row2 in zip(A, id_matrix.container))
+    for i in range(len(A)):
+        for j in range(len(A)):
+            if j == i:
+                if A[i][j] - 1 > tolerance:
+                    return False
+            else:
+                if A[i][j] - 0 > tolerance:
+                    return False
 
+    return True
