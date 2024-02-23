@@ -82,10 +82,12 @@ class TestRearrange:
         assert matrix == correct_matrix.container
 
     def test_width_greater_than_height(self):
-        matrix = Matrix([[4, 2, 7, 1, 9], [6, 3, 8, 5, 2], [1, 9, 4, 7, 3]])
+        matrix1 = Matrix([[4, 2, 7, 1], [6, 3, 8, 5], [1, 9, 4, 7]])
+        matrix2 = Matrix([9, 2, 3])
+        matrix = Aug_matrix(matrix1, matrix2)
         correct_matrix = Matrix([[6, 3, 8, 5, 2], [1, 9, 4, 7, 3], [4, 2, 7, 1, 9]])
         matrix = rearrange_rows(matrix, 0)
-        assert matrix.container == correct_matrix.container
+        assert matrix == correct_matrix.container
 
     def test_duplicate_rows(self):
         matrix = Matrix([[6, 2, 7, 1, 9], [6, 3, 8, 5, 2], [4, 9, 4, 7, 3]])
