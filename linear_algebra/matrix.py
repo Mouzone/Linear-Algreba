@@ -85,16 +85,6 @@ class Matrix:
         return Matrix(result)
 
 def check_input(user_input):
-    if not isinstance(user_input, list) or not user_input:
-        return "Matrix Initialization Error: Matrix must be initialized with a non-empty list"
-    if isinstance(user_input[0], list):
-        return check_matrix(user_input)
-    # below validates vector
-    elif not all(isinstance(val, (int, float)) for val in user_input):
-        return "Matrix Initialization Error: Vector must contain only numbers"
-    return None
-
-def check_input(user_input):
     if not isinstance(user_input, list): # must be a list
         raise "Matrix Initialization Error: Invalid Container"
     if not all(isinstance(row, list) for row in user_input) and not all(isinstance(row, (int, float)) for row in user_input): # must be a list of lists or list of numbers
@@ -107,12 +97,15 @@ def check_matrix(user_input):
     if all(isinstance(row, (int, float)) for row in user_input):
         return False # for its a vector
     # we are left with only list elements inside the user_input
-    if any(isinstance(row[0], list) for row in user_input):
-        raise "Matrix Initialization Error:  Excessive Nesting"
+
     sublist_lengths = [len(sublist) for sublist in user_input]
     if len(sublist_lengths) > 0 and len(set(sublist_lengths)) == 1:
         return True  # for its a matrix
-    raise "Matrix Initialization Error: Lengths of each row must be greater than 0 and all the same length"
+    else:
+        raise "Matrix Initialization Error: Lengths of each row must be greater than 0 and all the same length"
+
+    if any(isinstance(row[0], list) for row in user_input):
+        raise "Matrix Initialization Error: Excessive Nesting"
     
 def check_add_sub(left, right):
     if left.height != right.height:

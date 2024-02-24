@@ -1,6 +1,6 @@
 import pytest
 import re
-from linear_algebra.matrix import Matrix
+from linear_algebra.matrix import *
 
 class TestMatrix:
 
@@ -31,11 +31,13 @@ class TestMatrix:
         assert matrix.width == 3
 
     def test_empty_matrix_creation(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix Initialization Error: Matrix must not contain empty rows")):
-            matrix = Matrix([[]])
+        with pytest.raises(ValueError) as e:
+            check_input([[]])
+            check_matrix([[]])
+        assert(str(e.value) == "Matrix Initialization Error: Matrix must not contain empty rows")
 
     def test_empty_matrix_creation_failure(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix Initialization Error: Matrix must be initialized with a non-empty list")):
+        with pytest.raises(match=re.escape("Matrix Initialization Error: Matrix must be initialized with a non-empty list")):
             matrix = Matrix([])
 
     def test_invalid_input_type_failure(self):
