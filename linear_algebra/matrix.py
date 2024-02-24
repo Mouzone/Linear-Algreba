@@ -100,8 +100,6 @@ def check_input(user_input):
     return None
 
 def check_matrix(user_input):
-    # checking for the proper nesting 
-
     for row in user_input:
         if not isinstance(row, list):
             return "Matrix must be a list of lists"

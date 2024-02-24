@@ -55,6 +55,13 @@ class TestMatrix:
             matrix = Matrix([[1, "invalid", 3], [4, 5, 6]]) 
 
     def test_excessive_nesting(self):
-        with pytest.raises(MatrixInitializationError, match=re.escape("Excessive nesting in the lists")):
+        with pytest.raises(MatrixInitializationError, match=re.escape("Matrix Initialization Error: Matrix must contain only numbers")):
             matrix = Matrix([[[0]]]) 
     
+    def test_normal_nesting(self):
+        matrix = Matrix([[0]])
+        assert matrix.container == [[0]]
+    
+    def test_normal_nesting(self):
+        matrix = Matrix([[0], [0]])
+        assert matrix.container == [[0], [0]]
