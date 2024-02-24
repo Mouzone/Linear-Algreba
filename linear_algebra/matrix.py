@@ -101,6 +101,8 @@ def check_input(user_input):
 
 def check_matrix(user_input):
     # checking for the proper nesting 
+    if all(isinstance(row, list) for row in user_input):
+        return "Types are incompatible"
     if any(isinstance(row[0], list) for row in user_input):
         return "Excessive nesting in the lists"
 
@@ -117,9 +119,9 @@ def check_matrix(user_input):
     
 def check_add_sub(left, right):
     if left.height != right.height:
-        raise MatrixInitializationError(f"Heights are incompatible")
+        return "Heights are incompatible"
     if left.width != right.width:
-        raise MatrixInitializationError(f"Widths are incompatible")   
+        return "Widths are incompatible"  
 
 def check_mul(left, right):
     # self will always be a matrix
@@ -127,12 +129,12 @@ def check_mul(left, right):
     # takes care of matrix matrix
     if isinstance(right, Matrix):
         if left.width != right.height:
-            raise MatrixInitializationError(f"Dimensions are incompatible")   
+            return "Dimensions are incompatible"
         else:
             return True
 
     # this is for number * matrix or matrix * number
     if not (isinstance(right, int) or isinstance(right, float)):
-        raise MatrixInitializationError(f"Types are incompatible")   
+        return "Types are incompatible"  
     else:
         return True
