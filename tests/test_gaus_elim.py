@@ -1,5 +1,5 @@
 import pytest
-from linear_algebra.matrix import Matrix, MatrixInitializationError
+from linear_algebra.matrix import Matrix
 from linear_algebra.solve.gaus_elim import *
 
 class TestCheck_Upper_Triangular:

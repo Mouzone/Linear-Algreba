@@ -1,5 +1,5 @@
 import pytest
-from linear_algebra.matrix import Matrix, MatrixInitializationError
+from linear_algebra.matrix import Matrix
 
 class TestTranspose:
     def test_transpose_square_matrix(self):

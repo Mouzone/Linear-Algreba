@@ -1,13 +1,8 @@
-class MatrixInitializationError(Exception):
-    pass
-
-# weridly initializes [[0,0,0,0]]
 class Matrix:
     def __init__(self, user_input):
-        error = check_input(user_input)
-        if error:
-            raise MatrixInitializationError(f"Matrix Initialization Error: {error}")
-        if isinstance(user_input[0], list):
+        check_input(user_input)
+
+        if check_matrix(user_input):
             self.create_container(user_input, False) 
         else:
             self.create_container(user_input, True)
@@ -91,33 +86,39 @@ class Matrix:
 
 def check_input(user_input):
     if not isinstance(user_input, list) or not user_input:
-        return "Matrix must be initialized with a non-empty list"
+        return "Matrix Initialization Error: Matrix must be initialized with a non-empty list"
     if isinstance(user_input[0], list):
         return check_matrix(user_input)
     # below validates vector
     elif not all(isinstance(val, (int, float)) for val in user_input):
-        return "Vector must contain only numbers"
+        return "Matrix Initialization Error: Vector must contain only numbers"
     return None
 
+def check_input(user_input):
+    if not isinstance(user_input, list): # must be a list
+        raise "Matrix Initialization Error: Invalid Container"
+    if not all(isinstance(row, list) for row in user_input) and not all(isinstance(row, (int, float)) for row in user_input): # must be a list of lists or list of numbers
+        raise "Matrix Initialization Error: Matrix must be a list of lists or list of ints or floats"
+    return 
+
+# we know that it is either a list of lists or a list of all numbers
 def check_matrix(user_input):
-    for row in user_input:
-        if not isinstance(row, list):
-            return "Matrix must be a list of lists"
-        if not row:
-            return "Matrix must not contain empty rows"
-        if not all(isinstance(val, (int, float)) for val in row):
-            return "Matrix must contain only numbers"
-        if len(row) != len(user_input[0]):
-            return "All rows of the matrix must have the same length"
-        if isinstance(row[0], list):
-            return "Excessive nesting in the lists"
-    return None
+    # check all rows same length and greater than 0 length
+    if all(isinstance(row, (int, float)) for row in user_input):
+        return False # for its a vector
+    # we are left with only list elements inside the user_input
+    if any(isinstance(row[0], list) for row in user_input):
+        raise "Matrix Initialization Error:  Excessive Nesting"
+    sublist_lengths = [len(sublist) for sublist in user_input]
+    if len(sublist_lengths) > 0 and len(set(sublist_lengths)) == 1:
+        return True  # for its a matrix
+    raise "Matrix Initialization Error: Lengths of each row must be greater than 0 and all the same length"
     
 def check_add_sub(left, right):
     if left.height != right.height:
-        return "Heights are incompatible"
+        raise "Matrix Initialization Error: Heights are incompatible"
     if left.width != right.width:
-        return "Widths are incompatible"  
+        raise "Matrix Initialization Error: Heights are incompatible"
 
 def check_mul(left, right):
     # self will always be a matrix
@@ -125,12 +126,12 @@ def check_mul(left, right):
     # takes care of matrix matrix
     if isinstance(right, Matrix):
         if left.width != right.height:
-            return "Dimensions are incompatible"
+            raise "Matrix Initialization Error: Heights are incompatible"
         else:
             return True
 
     # this is for number * matrix or matrix * number
     if not (isinstance(right, int) or isinstance(right, float)):
-        return "Types are incompatible"  
+        raise "Matrix Initialization Error: Heights are incompatible"
     else:
         return True

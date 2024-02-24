@@ -1,5 +1,5 @@
 # input must be an invertible matrix, until invertibility check is found
-from linear_algebra.matrix import Matrix, MatrixInitializationError
+from linear_algebra.matrix import Matrix
 from linear_algebra import utility
 
 # alu_factorizztion returns rref form if a matrix is square for U!!

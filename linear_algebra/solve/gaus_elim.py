@@ -1,4 +1,4 @@
-from linear_algebra.matrix import Matrix, MatrixInitializationError
+from linear_algebra.matrix import Matrix
 from linear_algebra.utility import *
 
 class Aug_matrix:

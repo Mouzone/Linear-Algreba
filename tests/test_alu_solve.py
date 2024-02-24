@@ -1,5 +1,5 @@
 import pytest
-from linear_algebra.matrix import Matrix, MatrixInitializationError
+from linear_algebra.matrix import Matrix
 from linear_algebra.solve.alu import alu_factorization, input_check, alu_solve
 from linear_algebra import utility
 
