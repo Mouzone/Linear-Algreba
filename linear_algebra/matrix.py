@@ -111,7 +111,7 @@ def check_matrix(user_input):
             return "Matrix must contain only numbers"
         if len(row) != len(user_input[0]):
             return "All rows of the matrix must have the same length"
-        if any(isinstance(row[0], list)):
+        if isinstance(row[0], list):
             return "Excessive nesting in the lists"
     return None
     
