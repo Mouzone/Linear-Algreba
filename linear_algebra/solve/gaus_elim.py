@@ -64,21 +64,21 @@ def reduce(input_matrix, start):
     return result
 
 def find_special_solutions(input_matrix):
-    rref = self.rref
-    # if infinite return the positions of the free variables
-    # if singular or no solution return positions of the 0
-    special = {}
-    special["free cols"] = []
-    special["zero rows"] = []
+    # rref = self.rref
+    # # if infinite return the positions of the free variables
+    # # if singular or no solution return positions of the 0
+    # special = {}
+    # special["free cols"] = []
+    # special["zero rows"] = []
     
-    for row in range(len(rref)):
-        if all(element == 0 for element in rref[row]):
-            special["zero row"].append(row)
+    # for row in range(len(rref)):
+    #     if all(element == 0 for element in rref[row]):
+    #         special["zero row"].append(row)
     
-    # check for free cols
-    for col in range(len(rref[0])):
-        for row in range(len(rref)):
-            if rref[row][col] 
+    # # check for free cols
+    # for col in range(len(rref[0])):
+    #     for row in range(len(rref)):
+    #         if rref[row][col] 
     return 
 
 def check_input(A, b):
