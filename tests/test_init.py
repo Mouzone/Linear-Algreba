@@ -53,3 +53,8 @@ class TestMatrix:
     def test_invalid_input_element_not_int_failure(self):
         with pytest.raises(MatrixInitializationError, match=re.escape("Matrix Initialization Error: Matrix must contain only numbers")):
             matrix = Matrix([[1, "invalid", 3], [4, 5, 6]]) 
+
+    def test_excessive_nesting(self):
+        with pytest.raises(MatrixInitializationError, match=re.escape("Excessive nesting in the lists")):
+            matrix = Matrix([[[0]]]) 
+    
